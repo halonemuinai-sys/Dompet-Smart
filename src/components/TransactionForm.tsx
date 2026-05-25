@@ -23,6 +23,8 @@ export function TransactionForm() {
     addTransaction,
     updateTransaction,
     deleteTransaction,
+    showConfirm,
+    showAlert,
   } = useAppState();
 
   const [activeSubTab, setActiveSubTab] = useState<"expense" | "income" | "transfer">("expense");
@@ -154,12 +156,12 @@ export function TransactionForm() {
 
     const cleanAmt = cleanNumber(amount);
     if (cleanAmt <= 0) {
-      alert("Masukkan nominal transaksi!");
+      showAlert("Masukkan nominal transaksi!", "error");
       return;
     }
 
     if (!bankId) {
-      alert("Pilih akun bank!");
+      showAlert("Pilih akun bank!", "error");
       return;
     }
 
@@ -173,17 +175,17 @@ export function TransactionForm() {
 
     if (activeSubTab === "transfer") {
       if (!transferToBankId) {
-        alert("Pilih akun tujuan!");
+        showAlert("Pilih akun tujuan!", "error");
         return;
       }
       if (bankId === transferToBankId) {
-        alert("Akun asal dan tujuan tidak boleh sama!");
+        showAlert("Akun asal dan tujuan tidak boleh sama!", "error");
         return;
       }
       payload.transferToBankId = transferToBankId;
     } else {
       if (!categorySelect) {
-        alert("Pilih kategori!");
+        showAlert("Pilih kategori!", "error");
         return;
       }
       // Parse category Name and subCategory Name
@@ -203,8 +205,9 @@ export function TransactionForm() {
       setAmount("");
       setDescription("");
       setDiscount("");
+      showAlert("Transaksi berhasil dicatat!", "success");
     } else {
-      alert(res.message || "Gagal mencatat transaksi.");
+      showAlert(res.message || "Gagal mencatat transaksi.", "error");
     }
   };
 
@@ -222,7 +225,7 @@ export function TransactionForm() {
     e.preventDefault();
 
     if (!quickBankId) {
-      alert("Pilih akun bank!");
+      showAlert("Pilih akun bank!", "error");
       return;
     }
 
@@ -234,7 +237,7 @@ export function TransactionForm() {
       });
 
     if (itemsToLog.length === 0) {
-      alert("Pilih minimal satu template dengan menekan tombol (+)!");
+      showAlert("Pilih minimal satu template dengan menekan tombol (+)!", "error");
       return;
     }
 
@@ -255,7 +258,7 @@ export function TransactionForm() {
 
     // Reset Counters
     setQuickQty({});
-    alert("Semua transaksi cepat berhasil dicatat!");
+    showAlert("Semua transaksi cepat berhasil dicatat!", "success");
   };
 
   // Open Edit modal
@@ -281,7 +284,7 @@ export function TransactionForm() {
 
     const cleanAmt = cleanNumber(editAmount);
     if (cleanAmt <= 0) {
-      alert("Masukkan nominal transaksi!");
+      showAlert("Masukkan nominal transaksi!", "error");
       return;
     }
 
@@ -307,19 +310,26 @@ export function TransactionForm() {
     if (res.status === "success") {
       setIsEditOpen(false);
       setEditTx(null);
+      showAlert("Transaksi berhasil diubah!", "success");
     } else {
-      alert(res.message || "Gagal mengubah transaksi.");
+      showAlert(res.message || "Gagal mengubah transaksi.", "error");
     }
   };
 
   // Delete transaction
-  const handleDeleteClick = async (id: string) => {
-    if (confirm("Hapus data transaksi ini?")) {
-      const res = await deleteTransaction(id);
-      if (res.status !== "success") {
-        alert(res.message || "Gagal menghapus transaksi.");
-      }
-    }
+  const handleDeleteClick = (id: string) => {
+    showConfirm(
+      "Hapus data transaksi ini?",
+      async () => {
+        const res = await deleteTransaction(id);
+        if (res.status === "success") {
+          showAlert("Transaksi berhasil dihapus!", "success");
+        } else {
+          showAlert(res.message || "Gagal menghapus transaksi.", "error");
+        }
+      },
+      { title: "Hapus Transaksi", type: "danger" }
+    );
   };
 
   return (

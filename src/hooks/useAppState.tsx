@@ -66,6 +66,23 @@ interface AppStateContextType extends AppState {
   addSubscription: (data: any) => Promise<ApiResult>;
   updateSubscription: (data: any) => Promise<ApiResult>;
   deleteSubscription: (id: string) => Promise<ApiResult>;
+  
+  confirmState: {
+    isOpen: boolean;
+    title: string;
+    message: string;
+    onConfirm: () => void;
+    onCancel: () => void;
+    type?: "warning" | "danger" | "info";
+  };
+  alertState: {
+    isOpen: boolean;
+    message: string;
+    type: "success" | "error" | "info";
+  };
+  showConfirm: (message: string, onConfirm: () => void, options?: { title?: string; type?: "warning" | "danger" | "info" }) => void;
+  showAlert: (message: string, type?: "success" | "error" | "info") => void;
+  hideAlert: () => void;
 }
 
 const defaultState: AppState = {
@@ -90,6 +107,61 @@ const AppStateContext = createContext<AppStateContextType | undefined>(undefined
 
 export function AppStateProvider({ children }: { children: React.ReactNode }) {
   const [state, setState] = useState<AppState>(defaultState);
+
+  // Custom Confirm & Alert dialog states
+  const [confirmState, setConfirmState] = useState<{
+    isOpen: boolean;
+    title: string;
+    message: string;
+    onConfirm: () => void;
+    onCancel: () => void;
+    type?: "warning" | "danger" | "info";
+  }>({
+    isOpen: false,
+    title: "",
+    message: "",
+    onConfirm: () => {},
+    onCancel: () => {},
+    type: "warning",
+  });
+
+  const [alertState, setAlertState] = useState<{
+    isOpen: boolean;
+    message: string;
+    type: "success" | "error" | "info";
+  }>({
+    isOpen: false,
+    message: "",
+    type: "success",
+  });
+
+  const showConfirm = (message: string, onConfirmCallback: () => void, options?: { title?: string; type?: "warning" | "danger" | "info" }) => {
+    setConfirmState({
+      isOpen: true,
+      title: options?.title || "Konfirmasi Tindakan",
+      message,
+      onConfirm: () => {
+        onConfirmCallback();
+        setConfirmState((prev) => ({ ...prev, isOpen: false }));
+      },
+      onCancel: () => {
+        setConfirmState((prev) => ({ ...prev, isOpen: false }));
+      },
+      type: options?.type || "warning",
+    });
+  };
+
+  const showAlert = (message: string, type: "success" | "error" | "info" = "success") => {
+    setAlertState({
+      isOpen: true,
+      message,
+      type,
+    });
+  };
+
+  const hideAlert = () => {
+    setAlertState((prev) => ({ ...prev, isOpen: false }));
+  };
 
   const refreshData = useCallback(async () => {
     setState((s) => ({ ...s, syncing: true }));
@@ -298,6 +370,11 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
         saveBudget,
         deleteBudget,
         copyBudgets,
+        confirmState,
+        alertState,
+        showConfirm,
+        showAlert,
+        hideAlert,
         addFixedCost,
         deleteFixedCost,
         addDeposit,

@@ -35,6 +35,7 @@ import { SubscriptionView } from "@/components/SubscriptionView";
 import { InventoryView } from "@/components/InventoryView";
 import { BudgetView } from "@/components/BudgetView";
 import { ConfigView } from "@/components/ConfigView";
+import { CustomConfirmAlert } from "@/components/ui/CustomConfirmAlert";
 
 export default function Page() {
   const {
@@ -389,6 +390,9 @@ export default function Page() {
 
       {/* MAIN CONTENT AREA */}
       <main className="flex-1 flex flex-col min-h-screen pt-16 lg:pt-0 overflow-x-hidden">
+        {/* Custom Confirmation & Alert Dialog Overlay */}
+        <CustomConfirmAlert />
+
         {/* Global Error Banner */}
         {error && (
           <div className="bg-rose-500 text-white text-xs font-bold px-6 py-3 flex justify-between items-center animate-pulse">

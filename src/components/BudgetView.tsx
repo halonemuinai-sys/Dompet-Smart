@@ -21,6 +21,8 @@ export function BudgetView() {
     saveBudget,
     deleteBudget,
     copyBudgets,
+    showConfirm,
+    showAlert,
   } = useAppState();
 
   const [budgetMonth, setBudgetMonth] = useState(() => {
@@ -144,13 +146,13 @@ export function BudgetView() {
     e.preventDefault();
 
     if (!budgetMonth || !budgetCategory || !budgetAmount) {
-      alert("Pilih bulan, kategori, dan isi nominal budget!");
+      showAlert("Pilih bulan, kategori, dan isi nominal budget!", "error");
       return;
     }
 
     const cleanAmt = cleanNumber(budgetAmount);
     if (cleanAmt <= 0) {
-      alert("Nominal budget harus valid!");
+      showAlert("Nominal budget harus valid!", "error");
       return;
     }
 
@@ -161,20 +163,26 @@ export function BudgetView() {
     const res = await saveBudget(budgetMonth, categoryName, cleanAmt);
     if (res.status === "success") {
       setBudgetAmount("");
-      alert("Budget berhasil disimpan!");
+      showAlert("Budget berhasil disimpan!", "success");
     } else {
-      alert(res.message || "Gagal menyimpan budget.");
+      showAlert(res.message || "Gagal menyimpan budget.", "error");
     }
   };
 
   // Delete budget
-  const handleDeleteClick = async (id: string) => {
-    if (confirm("Hapus limit budget ini?")) {
-      const res = await deleteBudget(id);
-      if (res.status !== "success") {
-        alert(res.message || "Gagal menghapus budget.");
-      }
-    }
+  const handleDeleteClick = (id: string) => {
+    showConfirm(
+      "Hapus limit budget ini?",
+      async () => {
+        const res = await deleteBudget(id);
+        if (res.status === "success") {
+          showAlert("Limit budget berhasil dihapus!", "success");
+        } else {
+          showAlert(res.message || "Gagal menghapus budget.", "error");
+        }
+      },
+      { title: "Hapus Budget", type: "danger" }
+    );
   };
 
   // Copy budgets from last month
@@ -191,17 +199,18 @@ export function BudgetView() {
     }
     const prevMonthString = `${prevYear}-${String(prevMonth).padStart(2, "0")}`;
     
-    const confirmCopy = confirm(
-      `Salin semua limit budget dari bulan lalu (${prevMonthString}) ke bulan saat ini (${filterMonth})?\n\nCatatan: Ini akan meng-overwrite limit budget kategori yang sama di bulan ini.`
+    showConfirm(
+      `Salin semua limit budget dari bulan lalu (${prevMonthString}) ke bulan saat ini (${filterMonth})?\n\nCatatan: Ini akan menimpa limit budget kategori yang sama di bulan ini.`,
+      async () => {
+        const res = await copyBudgets(prevMonthString, filterMonth);
+        if (res.status === "success") {
+          showAlert("Berhasil menduplikasi budget dari bulan lalu!", "success");
+        } else {
+          showAlert(res.message || "Gagal menyalin budget.", "error");
+        }
+      },
+      { title: "Salin Budget", type: "warning" }
     );
-    if (!confirmCopy) return;
-    
-    const res = await copyBudgets(prevMonthString, filterMonth);
-    if (res.status === "success") {
-      alert("Berhasil menduplikasi budget dari bulan lalu!");
-    } else {
-      alert(res.message || "Gagal menyalin budget.");
-    }
   };
 
   return (
