@@ -20,6 +20,7 @@ export function BudgetView() {
     budgets,
     saveBudget,
     deleteBudget,
+    copyBudgets,
   } = useAppState();
 
   const [budgetMonth, setBudgetMonth] = useState(() => {
@@ -176,6 +177,33 @@ export function BudgetView() {
     }
   };
 
+  // Copy budgets from last month
+  const handleCopyLastMonthBudget = async () => {
+    const [yearStr, monthStr] = filterMonth.split("-");
+    const year = parseInt(yearStr, 10);
+    const month = parseInt(monthStr, 10);
+    
+    let prevYear = year;
+    let prevMonth = month - 1;
+    if (prevMonth === 0) {
+      prevMonth = 12;
+      prevYear = year - 1;
+    }
+    const prevMonthString = `${prevYear}-${String(prevMonth).padStart(2, "0")}`;
+    
+    const confirmCopy = confirm(
+      `Salin semua limit budget dari bulan lalu (${prevMonthString}) ke bulan saat ini (${filterMonth})?\n\nCatatan: Ini akan meng-overwrite limit budget kategori yang sama di bulan ini.`
+    );
+    if (!confirmCopy) return;
+    
+    const res = await copyBudgets(prevMonthString, filterMonth);
+    if (res.status === "success") {
+      alert("Berhasil menduplikasi budget dari bulan lalu!");
+    } else {
+      alert(res.message || "Gagal menyalin budget.");
+    }
+  };
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
       {/* Form Column */}
@@ -266,16 +294,27 @@ export function BudgetView() {
               </h3>
             </div>
 
-            <div className="flex items-center gap-2">
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                Filter:
-              </span>
-              <input
-                type="month"
-                value={filterMonth}
-                onChange={(e) => setFilterMonth(e.target.value)}
-                className="rounded-xl border border-slate-200 px-3 py-1.5 text-xs font-bold text-slate-600 bg-white outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer shadow-sm"
-              />
+            <div className="flex flex-wrap items-center gap-3">
+              <button
+                type="button"
+                onClick={handleCopyLastMonthBudget}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 text-[10px] font-bold rounded-xl transition-all border border-indigo-100 shadow-sm cursor-pointer"
+                title="Salin semua limit budget dari bulan lalu ke bulan ini"
+              >
+                <Plus className="w-3.5 h-3.5 text-indigo-500 animate-pulse" /> Salin Budget Bulan Lalu
+              </button>
+
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                  Filter:
+                </span>
+                <input
+                  type="month"
+                  value={filterMonth}
+                  onChange={(e) => setFilterMonth(e.target.value)}
+                  className="rounded-xl border border-slate-200 px-3 py-1.5 text-xs font-bold text-slate-600 bg-white outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer shadow-sm"
+                />
+              </div>
             </div>
           </div>
 

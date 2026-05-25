@@ -40,6 +40,7 @@ interface AppStateContextType extends AppState {
   
   saveBudget: (month: string, categoryName: string, limit: number) => Promise<ApiResult>;
   deleteBudget: (id: string) => Promise<ApiResult>;
+  copyBudgets: (sourceMonth: string, targetMonth: string) => Promise<ApiResult>;
   
   addFixedCost: (name: string, amount: number, categoryName: string) => Promise<ApiResult>;
   deleteFixedCost: (id: string) => Promise<ApiResult>;
@@ -215,6 +216,9 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
   const deleteBudget = (id: string) =>
     executeMutation(() => apiService.deleteBudget(id));
 
+  const copyBudgets = (sourceMonth: string, targetMonth: string) =>
+    executeMutation(() => apiService.copyBudgets(sourceMonth, targetMonth));
+
   // Fixed Cost mutations
   const addFixedCost = (name: string, amount: number, categoryName: string) =>
     executeMutation(() => apiService.addFixedCost(name, amount, categoryName));
@@ -293,6 +297,7 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
         deleteTransaction,
         saveBudget,
         deleteBudget,
+        copyBudgets,
         addFixedCost,
         deleteFixedCost,
         addDeposit,

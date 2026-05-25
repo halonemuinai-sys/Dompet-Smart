@@ -141,6 +141,15 @@ export const apiService = {
     return handleResponse(res);
   },
 
+  async copyBudgets(sourceMonth: string, targetMonth: string): Promise<ApiResult> {
+    const res = await fetch("/api/budgets/copy", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ sourceMonth, targetMonth }),
+    });
+    return handleResponse(res);
+  },
+
   // Fixed Costs
   async addFixedCost(name: string, amount: number, categoryName: string): Promise<ApiResult> {
     const res = await fetch("/api/fixed-costs", {
