@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect, useRef } from "react";
 import { useAppState } from "@/hooks/useAppState";
 import {
   Wallet,
@@ -23,6 +23,42 @@ import {
   ShoppingBag,
   Calendar,
 } from "lucide-react";
+
+// Lightweight, high-performance, fluid React Count-Up Component
+function AnimatedNumber({ value, formatter }: { value: number; formatter: (val: number) => string }) {
+  const [displayValue, setDisplayValue] = useState(0);
+  const startValueRef = useRef(0);
+  const startTimeRef = useRef<number | null>(null);
+  const duration = 1000; // 1s animation duration
+
+  useEffect(() => {
+    startValueRef.current = displayValue;
+    startTimeRef.current = null;
+    let animationFrameId: number;
+
+    const animate = (timestamp: number) => {
+      if (!startTimeRef.current) startTimeRef.current = timestamp;
+      const progress = Math.min((timestamp - startTimeRef.current) / duration, 1);
+      
+      // Easing: easeOutCubic
+      const easeProgress = 1 - Math.pow(1 - progress, 3);
+      
+      const currentVal = startValueRef.current + (value - startValueRef.current) * easeProgress;
+      setDisplayValue(currentVal);
+
+      if (progress < 1) {
+        animationFrameId = requestAnimationFrame(animate);
+      } else {
+        setDisplayValue(value);
+      }
+    };
+
+    animationFrameId = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [value]);
+
+  return <>{formatter(displayValue)}</>;
+}
 
 export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => void }) {
   const {
@@ -241,10 +277,31 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
   const budgetTotalLimit = budgetStats.totalAllocated > 0 ? budgetStats.totalAllocated : stats.income;
   const budgetUsagePercentage = budgetTotalLimit > 0 ? Math.round((budgetTotalSpent / budgetTotalLimit) * 100) : 0;
 
+  // React entrance and gauge fill animation controls
+  const [animateCards, setAnimateCards] = useState(false);
+  const [renderedSavingRate, setRenderedSavingRate] = useState(0);
+  const [renderedHealthScore, setRenderedHealthScore] = useState(0);
+  const [renderedBudgetPct, setRenderedBudgetPct] = useState(0);
+
+  useEffect(() => {
+    setAnimateCards(true);
+    
+    // Animate circular gauges and progress bars slightly after mount for fluid presentation
+    const srTimer = setTimeout(() => setRenderedSavingRate(stats.savingRate), 150);
+    const hsTimer = setTimeout(() => setRenderedHealthScore(health.score), 250);
+    const bgTimer = setTimeout(() => setRenderedBudgetPct(budgetUsagePercentage), 350);
+
+    return () => {
+      clearTimeout(srTimer);
+      clearTimeout(hsTimer);
+      clearTimeout(bgTimer);
+    };
+  }, [stats.savingRate, health.score, budgetUsagePercentage]);
+
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-6 rounded-2xl border border-slate-100 shadow-sm animate-fade-in-up">
         <div>
           <h1 className="text-2xl font-black text-slate-800 tracking-tight flex items-center gap-2">
             Dashboard
@@ -306,16 +363,21 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
             </p>
             <p className={`text-lg font-black tracking-tight ${stats.cashflow >= 0 ? "text-emerald-600" : "text-rose-600"}`}>
               {stats.cashflow >= 0 ? "+" : ""}
-              {formatRp(stats.cashflow)}
+              <AnimatedNumber value={stats.cashflow} formatter={formatRp} />
             </p>
           </div>
         </div>
       </div>
 
-      {/* KPI Cards Row (7 Cards Layout) */}
+      {/* KPI Cards Row (7 Cards Layout - Staggered Slide In Animation) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
         {/* 1. Total Saldo */}
-        <div className="bg-slate-900 text-white rounded-2xl p-4 flex flex-col justify-between border border-slate-800 shadow-sm min-h-[110px] relative overflow-hidden group">
+        <div
+          style={{ transitionDelay: "0ms" }}
+          className={`bg-slate-900 text-white rounded-2xl p-4 flex flex-col justify-between border border-slate-800 shadow-sm min-h-[110px] relative overflow-hidden group transition-all duration-700 ease-out transform ${
+            animateCards ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+          }`}
+        >
           <div className="absolute right-0 top-0 w-12 h-12 bg-emerald-500/10 rounded-bl-full pointer-events-none" />
           <div className="flex justify-between items-center text-slate-400">
             <span className="text-[8px] font-bold uppercase tracking-wider">Total Saldo</span>
@@ -323,14 +385,19 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
           </div>
           <div className="mt-3">
             <h3 className="text-base font-black tracking-tight leading-tight truncate">
-              {formatRp(bankStats.totalAssets)}
+              <AnimatedNumber value={bankStats.totalAssets} formatter={formatRp} />
             </h3>
             <p className="text-[9px] text-slate-500 mt-0.5">{banks.length} Akun</p>
           </div>
         </div>
 
         {/* 2. Pemasukan */}
-        <div className="bg-white rounded-2xl p-4 flex flex-col justify-between border border-slate-100 hover:border-emerald-200 transition-colors shadow-sm min-h-[110px] relative overflow-hidden group">
+        <div
+          style={{ transitionDelay: "40ms" }}
+          className={`bg-white rounded-2xl p-4 flex flex-col justify-between border border-slate-100 hover:border-emerald-200 transition-all duration-700 ease-out transform shadow-sm min-h-[110px] relative overflow-hidden group ${
+            animateCards ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+          }`}
+        >
           <div className="absolute right-0 top-0 w-12 h-12 bg-emerald-50 rounded-bl-full pointer-events-none" />
           <div className="flex justify-between items-center text-slate-400">
             <span className="text-[8px] font-bold uppercase tracking-wider">Pemasukan</span>
@@ -340,14 +407,19 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
           </div>
           <div className="mt-3">
             <h3 className="text-base font-black tracking-tight leading-tight text-emerald-600 truncate">
-              {formatRp(stats.income)}
+              <AnimatedNumber value={stats.income} formatter={formatRp} />
             </h3>
             <p className="text-[9px] text-slate-400 mt-0.5">Gaji & lainnya</p>
           </div>
         </div>
 
         {/* 3. Pengeluaran */}
-        <div className="bg-white rounded-2xl p-4 flex flex-col justify-between border border-slate-100 hover:border-rose-200 transition-colors shadow-sm min-h-[110px] relative overflow-hidden group">
+        <div
+          style={{ transitionDelay: "80ms" }}
+          className={`bg-white rounded-2xl p-4 flex flex-col justify-between border border-slate-100 hover:border-rose-200 transition-all duration-700 ease-out transform shadow-sm min-h-[110px] relative overflow-hidden group ${
+            animateCards ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+          }`}
+        >
           <div className="absolute right-0 top-0 w-12 h-12 bg-rose-50 rounded-bl-full pointer-events-none" />
           <div className="flex justify-between items-center text-slate-400">
             <span className="text-[8px] font-bold uppercase tracking-wider">Pengeluaran</span>
@@ -357,14 +429,19 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
           </div>
           <div className="mt-3">
             <h3 className="text-base font-black tracking-tight leading-tight text-rose-600 truncate">
-              {formatRp(stats.expense)}
+              <AnimatedNumber value={stats.expense} formatter={formatRp} />
             </h3>
             <p className="text-[9px] text-slate-400 mt-0.5">Bulan ini</p>
           </div>
         </div>
 
         {/* 4. Sisa Budget */}
-        <div className="bg-white rounded-2xl p-4 flex flex-col justify-between border border-slate-100 hover:border-emerald-200 transition-colors shadow-sm min-h-[110px] relative overflow-hidden group">
+        <div
+          style={{ transitionDelay: "120ms" }}
+          className={`bg-white rounded-2xl p-4 flex flex-col justify-between border border-slate-100 hover:border-emerald-200 transition-all duration-700 ease-out transform shadow-sm min-h-[110px] relative overflow-hidden group ${
+            animateCards ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+          }`}
+        >
           <div className="absolute right-0 top-0 w-12 h-12 bg-emerald-50 rounded-bl-full pointer-events-none" />
           <div className="flex justify-between items-center text-slate-400">
             <span className="text-[8px] font-bold uppercase tracking-wider">Sisa Budget</span>
@@ -375,7 +452,7 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
           <div className="mt-3">
             <h3 className={`text-base font-black tracking-tight leading-tight truncate ${sisaBudget >= 0 ? "text-emerald-600" : "text-rose-600"}`}>
               {sisaBudget >= 0 ? "+" : ""}
-              {formatRp(sisaBudget)}
+              <AnimatedNumber value={sisaBudget} formatter={formatRp} />
             </h3>
             <p className={`text-[9px] font-bold mt-0.5 ${sisaBudget >= 0 ? "text-slate-400" : "text-rose-500"}`}>
               {sisaBudgetText}
@@ -384,7 +461,12 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
         </div>
 
         {/* 5. Total Hemat */}
-        <div className="bg-white rounded-2xl p-4 flex flex-col justify-between border border-slate-100 hover:border-teal-200 transition-colors shadow-sm min-h-[110px] relative overflow-hidden group">
+        <div
+          style={{ transitionDelay: "160ms" }}
+          className={`bg-white rounded-2xl p-4 flex flex-col justify-between border border-slate-100 hover:border-teal-200 transition-all duration-700 ease-out transform shadow-sm min-h-[110px] relative overflow-hidden group ${
+            animateCards ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+          }`}
+        >
           <div className="absolute right-0 top-0 w-12 h-12 bg-teal-50/50 rounded-bl-full pointer-events-none" />
           <div className="flex justify-between items-center text-slate-400">
             <span className="text-[8px] font-bold uppercase tracking-wider">Total Hemat</span>
@@ -394,14 +476,19 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
           </div>
           <div className="mt-3">
             <h3 className="text-base font-black tracking-tight leading-tight text-teal-600 truncate">
-              {formatRp(stats.savingsDiscount)}
+              <AnimatedNumber value={stats.savingsDiscount} formatter={formatRp} />
             </h3>
             <p className="text-[9px] text-slate-400 mt-0.5">Diskon belanja</p>
           </div>
         </div>
 
         {/* 6. Total Hutang */}
-        <div className="bg-white rounded-2xl p-4 flex flex-col justify-between border border-slate-100 hover:border-orange-200 transition-colors shadow-sm min-h-[110px] relative overflow-hidden group">
+        <div
+          style={{ transitionDelay: "200ms" }}
+          className={`bg-white rounded-2xl p-4 flex flex-col justify-between border border-slate-100 hover:border-orange-200 transition-all duration-700 ease-out transform shadow-sm min-h-[110px] relative overflow-hidden group ${
+            animateCards ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+          }`}
+        >
           <div className="absolute right-0 top-0 w-12 h-12 bg-orange-50/50 rounded-bl-full pointer-events-none" />
           <div className="flex justify-between items-center text-slate-400">
             <span className="text-[8px] font-bold uppercase tracking-wider">Total Hutang</span>
@@ -411,14 +498,19 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
           </div>
           <div className="mt-3">
             <h3 className="text-base font-black tracking-tight leading-tight text-orange-600 truncate">
-              {formatRp(bankStats.totalDebt)}
+              <AnimatedNumber value={bankStats.totalDebt} formatter={formatRp} />
             </h3>
             <p className="text-[9px] text-slate-400 mt-0.5">Paylater & CC</p>
           </div>
         </div>
 
         {/* 7. Saving Rate Card */}
-        <div className="bg-emerald-600 text-white rounded-2xl p-4 flex items-center justify-between shadow-md min-h-[110px] relative overflow-hidden group">
+        <div
+          style={{ transitionDelay: "240ms" }}
+          className={`bg-emerald-600 text-white rounded-2xl p-4 flex items-center justify-between shadow-md min-h-[110px] relative overflow-hidden group transition-all duration-700 ease-out transform ${
+            animateCards ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+          }`}
+        >
           <div className="relative w-12 h-12 shrink-0">
             <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36">
               <path
@@ -432,17 +524,22 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
                 fill="none"
                 stroke="#ffffff"
                 strokeWidth="3.5"
-                strokeDasharray={`${Math.max(0, Math.min(100, stats.savingRate))}, 100`}
+                className="transition-all duration-1000 ease-out"
+                strokeDasharray={`${Math.max(0, Math.min(100, renderedSavingRate))}, 100`}
                 strokeLinecap="round"
               />
             </svg>
             <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-[9px] font-black text-white">{stats.savingRate}%</span>
+              <span className="text-[9px] font-black text-white">
+                <AnimatedNumber value={stats.savingRate} formatter={(val) => `${Math.round(val)}%`} />
+              </span>
             </div>
           </div>
           <div className="text-right">
             <span className="text-[8px] font-bold text-emerald-200 uppercase tracking-widest">Saving Rate</span>
-            <h3 className="text-base font-black leading-none mt-0.5">{stats.savingRate}%</h3>
+            <h3 className="text-base font-black leading-none mt-0.5">
+              <AnimatedNumber value={stats.savingRate} formatter={(val) => `${Math.round(val)}%`} />
+            </h3>
             <p className="text-[7px] text-emerald-100/75 mt-1 leading-normal">% tersisa dari pemasukan</p>
           </div>
         </div>
@@ -451,7 +548,12 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
       {/* Financial Health, Forecast & Top Categories Column Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Financial Health */}
-        <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm flex flex-col justify-between relative overflow-hidden min-h-[220px]">
+        <div
+          style={{ transitionDelay: "280ms" }}
+          className={`bg-white rounded-2xl p-6 border border-slate-100 shadow-sm flex flex-col justify-between relative overflow-hidden min-h-[220px] transition-all duration-700 ease-out transform ${
+            animateCards ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+          }`}
+        >
           <div>
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-sm font-black text-slate-800 uppercase tracking-wider">
@@ -477,7 +579,8 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
                     fill="none"
                     stroke="url(#healthGradDashboard)"
                     strokeWidth="3.5"
-                    strokeDasharray={`${health.score}, 100`}
+                    className="transition-all duration-1000 ease-out"
+                    strokeDasharray={`${renderedHealthScore}, 100`}
                     strokeLinecap="round"
                   />
                   <defs>
@@ -488,7 +591,9 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
                   </defs>
                 </svg>
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <span className="text-lg font-black text-slate-800 leading-none">{health.score}</span>
+                  <span className="text-lg font-black text-slate-800 leading-none">
+                    <AnimatedNumber value={health.score} formatter={(val) => `${Math.round(val)}`} />
+                  </span>
                   <span className="text-[7px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">Score</span>
                 </div>
               </div>
@@ -518,7 +623,12 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
         </div>
 
         {/* Ramalan Arus Kas / Forecast */}
-        <div className="bg-gradient-to-br from-emerald-600 to-teal-700 text-white rounded-2xl p-6 shadow-md relative overflow-hidden flex flex-col justify-between min-h-[220px]">
+        <div
+          style={{ transitionDelay: "320ms" }}
+          className={`bg-gradient-to-br from-emerald-600 to-teal-700 text-white rounded-2xl p-6 shadow-md relative overflow-hidden flex flex-col justify-between min-h-[220px] transition-all duration-700 ease-out transform ${
+            animateCards ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+          }`}
+        >
           <div className="absolute top-0 right-0 p-4 opacity-15">
             <Zap className="w-16 h-16" />
           </div>
@@ -530,7 +640,9 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
               Monthly Cashflow Forecast
             </p>
             <div className="flex items-center gap-2 mt-4">
-              <h2 className="text-2xl font-black tracking-tight">{formatRp(forecast.val)}</h2>
+              <h2 className="text-2xl font-black tracking-tight">
+                <AnimatedNumber value={forecast.val} formatter={formatRp} />
+              </h2>
               <span className={`text-[9px] font-extrabold bg-white/20 border border-white/10 px-2 py-0.5 rounded-full uppercase`}>
                 {forecast.val >= 0 ? "Surplus" : "Defisit"}
               </span>
@@ -542,13 +654,18 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
           <div className="w-full bg-white/10 rounded-full h-1.5 overflow-hidden">
             <div
               className="bg-white h-full transition-all duration-1000"
-              style={{ width: `${Math.max(10, Math.min(100, stats.savingRate))}%` }}
+              style={{ width: `${Math.max(10, Math.min(100, renderedSavingRate))}%` }}
             />
           </div>
         </div>
 
         {/* Alokasi Terbesar */}
-        <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm flex flex-col justify-between min-h-[220px]">
+        <div
+          style={{ transitionDelay: "360ms" }}
+          className={`bg-white rounded-2xl p-6 border border-slate-100 shadow-sm flex flex-col justify-between min-h-[220px] transition-all duration-700 ease-out transform ${
+            animateCards ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+          }`}
+        >
           <div>
             <h3 className="text-sm font-black text-slate-800 uppercase tracking-wider mb-4 pb-2 border-b border-slate-50">
               Alokasi Terbesar
@@ -573,7 +690,7 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
                       </div>
                       <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
                         <div
-                          className={`h-full ${colors[i] || "bg-slate-400"} rounded-full`}
+                          className={`h-full ${colors[i] || "bg-slate-400"} rounded-full transition-all duration-1000 ease-out`}
                           style={{ width: `${pct}%` }}
                         />
                       </div>
@@ -587,37 +704,47 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
       </div>
 
       {/* Penggunaan Budget Bulan Ini (Full Width Progress) */}
-      <div className="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm space-y-3">
+      <div
+        style={{ transitionDelay: "400ms" }}
+        className={`bg-white rounded-2xl p-5 border border-slate-100 shadow-sm space-y-3 transition-all duration-700 ease-out transform ${
+          animateCards ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+        }`}
+      >
         <div className="flex justify-between items-center text-xs font-bold text-slate-700">
           <span className="uppercase tracking-wider">Penggunaan Budget Bulan Ini</span>
           <span className={budgetUsagePercentage >= 90 ? "text-rose-500 font-extrabold" : "text-emerald-600 font-extrabold"}>
-            {budgetUsagePercentage}% terpakai
+            <AnimatedNumber value={budgetUsagePercentage} formatter={(val) => `${Math.round(val)}%`} /> terpakai
           </span>
         </div>
 
         <div className="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
           <div
-            className={`h-full rounded-full transition-all duration-700 ${
+            className={`h-full rounded-full transition-all duration-1000 ease-out ${
               budgetUsagePercentage >= 90
                 ? "bg-rose-500"
                 : budgetUsagePercentage >= 75
                 ? "bg-amber-500"
                 : "bg-emerald-600"
             }`}
-            style={{ width: `${Math.min(100, budgetUsagePercentage)}%` }}
+            style={{ width: `${Math.min(100, renderedBudgetPct)}%` }}
           />
         </div>
 
         <div className="flex justify-between items-center text-[10px] text-slate-400 font-bold">
-          <span>{formatRp(budgetTotalSpent)}</span>
-          <span>Target: {formatRp(budgetTotalLimit)}</span>
+          <span><AnimatedNumber value={budgetTotalSpent} formatter={formatRp} /></span>
+          <span>Target: <AnimatedNumber value={budgetTotalLimit} formatter={formatRp} /></span>
         </div>
       </div>
 
       {/* Smart Financial Advisor Alert Insight */}
-      <div className="bg-emerald-50/50 border border-emerald-100 rounded-2xl p-5 shadow-sm flex items-start gap-4">
+      <div
+        style={{ transitionDelay: "440ms" }}
+        className={`bg-emerald-50/50 border border-emerald-100 rounded-2xl p-5 shadow-sm flex items-start gap-4 transition-all duration-700 ease-out transform ${
+          animateCards ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+        }`}
+      >
         <div className="p-2.5 bg-emerald-600 text-white rounded-xl shadow-md shrink-0">
-          <Zap className="w-4 h-4" />
+          <Zap className="w-4 h-4 animate-bounce" />
         </div>
         <div className="space-y-1.5 flex-1">
           <div className="flex justify-between items-center">
@@ -653,14 +780,19 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
         {/* Left Column: Asset & Portfolio Summary */}
         <div className="space-y-4">
           {/* Kekayaan Bersih */}
-          <div className="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm flex flex-col justify-between min-h-[125px] relative overflow-hidden group">
+          <div
+            style={{ transitionDelay: "480ms" }}
+            className={`bg-white rounded-2xl p-5 border border-slate-100 shadow-sm flex flex-col justify-between min-h-[125px] relative overflow-hidden group transition-all duration-700 ease-out transform ${
+              animateCards ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+            }`}
+          >
             <div className="absolute right-0 top-0 w-24 h-24 bg-gradient-to-bl from-emerald-50 to-transparent rounded-bl-full pointer-events-none transition-all group-hover:scale-110" />
             <div>
               <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" /> Kekayaan Bersih
               </span>
               <h3 className="text-2xl font-black text-slate-800 tracking-tight mt-2">
-                {formatRp(bankStats.netWorth)}
+                <AnimatedNumber value={bankStats.netWorth} formatter={formatRp} />
               </h3>
               <p className="text-[10px] text-slate-400 mt-2 leading-relaxed font-semibold">
                 Formulasi: Saldo + Deposito ({formatRp(bankStats.activeDeposits)}) + Kripto ({formatRp(bankStats.activeCryptos)}) &minus; Hutang/Paylater ({formatRp(bankStats.totalDebt)})
@@ -673,7 +805,10 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
             {/* Deposito */}
             <div
               onClick={() => onSwitchTab("portfolio")}
-              className="bg-white rounded-2xl p-4 border border-slate-100 shadow-sm flex items-center justify-between hover:border-emerald-200 hover:shadow-md transition-all cursor-pointer group"
+              style={{ transitionDelay: "520ms" }}
+              className={`bg-white rounded-2xl p-4 border border-slate-100 shadow-sm flex items-center justify-between hover:border-emerald-200 hover:shadow-md transition-all duration-700 ease-out transform cursor-pointer group ${
+                animateCards ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+              }`}
             >
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-emerald-50 text-emerald-600 rounded-xl">
@@ -684,7 +819,7 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
                     Deposito
                   </span>
                   <span className="text-xs font-black text-slate-700 mt-0.5 block">
-                    {formatRp(bankStats.activeDeposits)}
+                    <AnimatedNumber value={bankStats.activeDeposits} formatter={formatRp} />
                   </span>
                 </div>
               </div>
@@ -694,7 +829,10 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
             {/* Kripto */}
             <div
               onClick={() => onSwitchTab("portfolio")}
-              className="bg-white rounded-2xl p-4 border border-slate-100 shadow-sm flex items-center justify-between hover:border-amber-200 hover:shadow-md transition-all cursor-pointer group"
+              style={{ transitionDelay: "560ms" }}
+              className={`bg-white rounded-2xl p-4 border border-slate-100 shadow-sm flex items-center justify-between hover:border-amber-200 hover:shadow-md transition-all duration-700 ease-out transform cursor-pointer group ${
+                animateCards ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+              }`}
             >
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-amber-50 text-amber-500 rounded-xl">
@@ -705,7 +843,7 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
                     Kripto
                   </span>
                   <span className="text-xs font-black text-slate-700 mt-0.5 block">
-                    {formatRp(bankStats.activeCryptos)}
+                    <AnimatedNumber value={bankStats.activeCryptos} formatter={formatRp} />
                   </span>
                 </div>
               </div>
@@ -720,7 +858,10 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
             {/* E-Commerce */}
             <div
               onClick={() => onSwitchTab("ecommerce")}
-              className="bg-white rounded-2xl p-4 border border-slate-100 shadow-sm flex items-center justify-between hover:border-orange-200 hover:shadow-md transition-all cursor-pointer group"
+              style={{ transitionDelay: "600ms" }}
+              className={`bg-white rounded-2xl p-4 border border-slate-100 shadow-sm flex items-center justify-between hover:border-orange-200 hover:shadow-md transition-all duration-700 ease-out transform cursor-pointer group ${
+                animateCards ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+              }`}
             >
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-orange-50 text-orange-500 rounded-xl">
@@ -731,7 +872,7 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
                     E-Commerce
                   </span>
                   <span className="text-xs font-black text-slate-700 mt-0.5 block">
-                    {formatRp(ecomMonthlyTotal)}
+                    <AnimatedNumber value={ecomMonthlyTotal} formatter={formatRp} />
                   </span>
                 </div>
               </div>
@@ -739,7 +880,12 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
             </div>
 
             {/* Status Budget */}
-            <div className="bg-white rounded-2xl p-4 border border-slate-100 shadow-sm flex flex-col justify-between min-h-[76px]">
+            <div
+              style={{ transitionDelay: "640ms" }}
+              className={`bg-white rounded-2xl p-4 border border-slate-100 shadow-sm flex flex-col justify-between min-h-[76px] transition-all duration-700 ease-out transform ${
+                animateCards ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+              }`}
+            >
               <div className="flex justify-between items-center">
                 <span className="text-[8px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1">
                   <FileText className="w-3.5 h-3.5 text-emerald-500" /> Status Budget
@@ -764,7 +910,7 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
                   <div className="space-y-1">
                     <div className="flex justify-between text-[8px] font-bold text-slate-500">
                       <span>Terpakai {budgetStats.usagePct}%</span>
-                      <span>Sisa {formatRp(Math.max(0, budgetStats.totalAllocated - budgetStats.totalSpentInBudgets))}</span>
+                      <span>Sisa <AnimatedNumber value={Math.max(0, budgetStats.totalAllocated - budgetStats.totalSpentInBudgets)} formatter={formatRp} /></span>
                     </div>
                     <div className="w-full h-1 bg-slate-100 rounded-full overflow-hidden">
                       <div
@@ -779,7 +925,12 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
           </div>
 
           {/* Tagihan Langganan */}
-          <div className="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm flex flex-col justify-between min-h-[125px] relative overflow-hidden group">
+          <div
+            style={{ transitionDelay: "680ms" }}
+            className={`bg-white rounded-2xl p-5 border border-slate-100 shadow-sm flex flex-col justify-between min-h-[125px] relative overflow-hidden group transition-all duration-700 ease-out transform ${
+              animateCards ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+            }`}
+          >
             <div className="flex justify-between items-center border-b border-slate-50 pb-2">
               <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1.5">
                 <Calendar className="w-4 h-4 text-emerald-500" /> Tagihan Langganan
