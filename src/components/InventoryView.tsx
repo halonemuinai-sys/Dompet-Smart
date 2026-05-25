@@ -206,7 +206,7 @@ export function InventoryView() {
             <select
               value={filterCategory}
               onChange={(e) => setFilterCategory(e.target.value)}
-              className="w-full rounded-xl border border-slate-200 p-2 text-xs bg-white focus:ring-2 focus:ring-indigo-500 outline-none"
+              className="w-full rounded-xl border border-slate-200 p-2 text-xs bg-white focus:ring-2 focus:ring-emerald-500 outline-none"
             >
               <option value="all">Semua Kategori</option>
               {categoryOptions.map((c) => (
@@ -224,7 +224,7 @@ export function InventoryView() {
             <select
               value={filterCondition}
               onChange={(e) => setFilterCondition(e.target.value)}
-              className="w-full rounded-xl border border-slate-200 p-2 text-xs bg-white focus:ring-2 focus:ring-indigo-500 outline-none"
+              className="w-full rounded-xl border border-slate-200 p-2 text-xs bg-white focus:ring-2 focus:ring-emerald-500 outline-none"
             >
               <option value="all">Semua Kondisi</option>
               <option value="Baik">Baik</option>
@@ -251,7 +251,7 @@ export function InventoryView() {
                 value={itemName}
                 onChange={(e) => setItemName(e.target.value)}
                 placeholder="Misal: iPhone 16 Pro Max, Sofa Ruang Tamu"
-                className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-emerald-500 outline-none"
               />
             </div>
 
@@ -264,7 +264,7 @@ export function InventoryView() {
                 required
                 value={categoryName}
                 onChange={(e) => setCategoryName(e.target.value)}
-                className="w-full rounded-xl border border-slate-200 p-3 text-sm bg-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full rounded-xl border border-slate-200 p-3 text-sm bg-white focus:ring-2 focus:ring-emerald-500 outline-none"
               >
                 <option value="">Pilih Kategori...</option>
                 {categoryOptions.map((c) => (
@@ -286,7 +286,7 @@ export function InventoryView() {
                 value={purchasePrice}
                 onChange={(e) => handleAmountChange(e.target.value, setPurchasePrice)}
                 placeholder="Rp 0"
-                className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-emerald-500 outline-none"
               />
             </div>
 
@@ -301,7 +301,7 @@ export function InventoryView() {
                   required
                   value={purchaseDate}
                   onChange={(e) => setPurchaseDate(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 p-3 text-xs focus:ring-2 focus:ring-indigo-500 outline-none"
+                  className="w-full rounded-xl border border-slate-200 p-3 text-xs focus:ring-2 focus:ring-emerald-500 outline-none"
                 />
               </div>
 
@@ -316,7 +316,7 @@ export function InventoryView() {
                   value={lifespanMonths}
                   onChange={(e) => setLifespanMonths(e.target.value)}
                   placeholder="24"
-                  className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                  className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-emerald-500 outline-none"
                 />
               </div>
             </div>
@@ -329,7 +329,7 @@ export function InventoryView() {
               <select
                 value={condition}
                 onChange={(e) => setCondition(e.target.value)}
-                className="w-full rounded-xl border border-slate-200 p-3 text-sm bg-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full rounded-xl border border-slate-200 p-3 text-sm bg-white focus:ring-2 focus:ring-emerald-500 outline-none"
               >
                 <option value="Baik">Baik</option>
                 <option value="Cukup">Cukup</option>
@@ -408,7 +408,7 @@ export function InventoryView() {
                     <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
                       <button
                         onClick={() => handleEditClick(item)}
-                        className="p-1.5 hover:bg-slate-100 rounded text-slate-400 hover:text-indigo-600"
+                        className="p-1.5 hover:bg-slate-100 rounded text-slate-400 hover:text-emerald-600"
                         title="Edit"
                       >
                         <Edit2 className="w-3.5 h-3.5" />
@@ -429,7 +429,7 @@ export function InventoryView() {
                       <span className="text-slate-400 uppercase tracking-wider">
                         Sisa Masa Depresiasi
                       </span>
-                      <span className={isDepreciated ? "text-rose-500" : "text-indigo-600"}>
+                      <span className={isDepreciated ? "text-rose-500" : "text-emerald-600"}>
                         {isDepreciated ? "Aset Habis Nilai" : `${life.remaining} Bulan Tersisa`}
                       </span>
                     </div>
@@ -473,7 +473,7 @@ export function InventoryView() {
                 required
                 value={editItemName}
                 onChange={(e) => setEditItemName(e.target.value)}
-                className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-emerald-500 outline-none"
               />
             </div>
 
@@ -485,7 +485,7 @@ export function InventoryView() {
                 required
                 value={editCategoryName}
                 onChange={(e) => setEditCategoryName(e.target.value)}
-                className="w-full rounded-xl border border-slate-200 p-3 text-sm bg-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full rounded-xl border border-slate-200 p-3 text-sm bg-white focus:ring-2 focus:ring-emerald-500 outline-none"
               >
                 {categoryOptions.map((c) => (
                   <option key={c.id} value={c.name}>
@@ -504,7 +504,7 @@ export function InventoryView() {
                 required
                 value={editPrice}
                 onChange={(e) => handleAmountChange(e.target.value, setEditPrice)}
-                className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-emerald-500 outline-none"
               />
             </div>
 
@@ -518,7 +518,7 @@ export function InventoryView() {
                   required
                   value={editDate}
                   onChange={(e) => setEditDate(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 p-3 text-xs focus:ring-2 focus:ring-indigo-500 outline-none"
+                  className="w-full rounded-xl border border-slate-200 p-3 text-xs focus:ring-2 focus:ring-emerald-500 outline-none"
                 />
               </div>
 
@@ -531,7 +531,7 @@ export function InventoryView() {
                   required
                   value={editLifespan}
                   onChange={(e) => setEditLifespan(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                  className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-emerald-500 outline-none"
                 />
               </div>
             </div>
@@ -543,7 +543,7 @@ export function InventoryView() {
               <select
                 value={editCondition}
                 onChange={(e) => setEditCondition(e.target.value)}
-                className="w-full rounded-xl border border-slate-200 p-3 text-sm bg-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full rounded-xl border border-slate-200 p-3 text-sm bg-white focus:ring-2 focus:ring-emerald-500 outline-none"
               >
                 <option value="Baik">Baik</option>
                 <option value="Cukup">Cukup</option>
@@ -564,7 +564,7 @@ export function InventoryView() {
               </button>
               <button
                 type="submit"
-                className="flex-1 py-3 rounded-xl bg-indigo-600 text-white font-semibold hover:bg-indigo-700 text-sm transition-all shadow-md shadow-indigo-100"
+                className="flex-1 py-3 rounded-xl bg-emerald-600 text-white font-semibold hover:bg-emerald-700 text-sm transition-all shadow-md shadow-emerald-100"
               >
                 Simpan Perubahan
               </button>

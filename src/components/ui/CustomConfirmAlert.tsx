@@ -47,7 +47,7 @@ export function CustomConfirmAlert() {
               </div>
             )}
             {alertState.type === "info" && (
-              <div className="p-1.5 bg-indigo-50 text-indigo-600 rounded-xl">
+              <div className="p-1.5 bg-emerald-50 text-emerald-600 rounded-xl">
                 <Info className="w-5 h-5" />
               </div>
             )}
@@ -83,7 +83,7 @@ export function CustomConfirmAlert() {
                     ? "bg-rose-50 text-rose-600"
                     : confirmState.type === "warning"
                     ? "bg-amber-50 text-amber-500"
-                    : "bg-indigo-50 text-indigo-600"
+                    : "bg-emerald-50 text-emerald-600"
                 }`}
               >
                 <AlertTriangle className="w-6 h-6 animate-bounce" />
@@ -117,7 +117,7 @@ export function CustomConfirmAlert() {
                     ? "bg-rose-600 hover:bg-rose-700 shadow-rose-100"
                     : confirmState.type === "warning"
                     ? "bg-amber-500 hover:bg-amber-600 shadow-amber-100"
-                    : "bg-indigo-600 hover:bg-indigo-700 shadow-indigo-100"
+                    : "bg-emerald-600 hover:bg-emerald-700 shadow-emerald-100"
                 }`}
               >
                 Ya, Lanjutkan

@@ -150,7 +150,7 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
       tip = "Kondisi keuangan sangat sehat! Pertahankan rasio menabung Anda.";
     } else if (score >= 60) {
       badge = "GOOD";
-      badgeClass = "bg-indigo-50 text-indigo-600 border-indigo-100";
+      badgeClass = "bg-emerald-50 text-emerald-600 border-emerald-100";
       tip = "Keuangan stabil. Coba kurangi cicilan/paylater untuk skor lebih tinggi.";
     }
 
@@ -251,7 +251,7 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
           </h1>
           <p className="text-slate-400 text-xs font-semibold uppercase tracking-wider mt-1">
             Ringkasan keuangan Anda bulan{" "}
-            <span className="text-indigo-600 font-black">
+            <span className="text-emerald-600 font-black">
               {new Date(parseInt(selectedYear), parseInt(selectedMonth) - 1).toLocaleString("id-ID", {
                 month: "long",
                 year: "numeric",
@@ -271,7 +271,7 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
               <select
                 value={selectedMonth}
                 onChange={(e) => setSelectedMonth(e.target.value)}
-                className="rounded-xl border border-slate-200 px-3 py-1.5 text-xs font-bold text-slate-600 bg-white outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer shadow-sm"
+                className="rounded-xl border border-slate-200 px-3 py-1.5 text-xs font-bold text-slate-600 bg-white outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer shadow-sm"
               >
                 <option value="01">Jan</option>
                 <option value="02">Feb</option>
@@ -289,7 +289,7 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
               <select
                 value={selectedYear}
                 onChange={(e) => setSelectedYear(e.target.value)}
-                className="rounded-xl border border-slate-200 px-3 py-1.5 text-xs font-bold text-slate-600 bg-white outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer shadow-sm"
+                className="rounded-xl border border-slate-200 px-3 py-1.5 text-xs font-bold text-slate-600 bg-white outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer shadow-sm"
               >
                 <option value="2024">2024</option>
                 <option value="2025">2025</option>
@@ -316,10 +316,10 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
         {/* 1. Total Saldo */}
         <div className="bg-slate-900 text-white rounded-2xl p-4 flex flex-col justify-between border border-slate-800 shadow-sm min-h-[110px] relative overflow-hidden group">
-          <div className="absolute right-0 top-0 w-12 h-12 bg-indigo-500/10 rounded-bl-full pointer-events-none" />
+          <div className="absolute right-0 top-0 w-12 h-12 bg-emerald-500/10 rounded-bl-full pointer-events-none" />
           <div className="flex justify-between items-center text-slate-400">
             <span className="text-[8px] font-bold uppercase tracking-wider">Total Saldo</span>
-            <Wallet className="w-4 h-4 text-indigo-400" />
+            <Wallet className="w-4 h-4 text-emerald-400" />
           </div>
           <div className="mt-3">
             <h3 className="text-base font-black tracking-tight leading-tight truncate">
@@ -364,16 +364,16 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
         </div>
 
         {/* 4. Sisa Budget */}
-        <div className="bg-white rounded-2xl p-4 flex flex-col justify-between border border-slate-100 hover:border-indigo-200 transition-colors shadow-sm min-h-[110px] relative overflow-hidden group">
-          <div className="absolute right-0 top-0 w-12 h-12 bg-indigo-50 rounded-bl-full pointer-events-none" />
+        <div className="bg-white rounded-2xl p-4 flex flex-col justify-between border border-slate-100 hover:border-emerald-200 transition-colors shadow-sm min-h-[110px] relative overflow-hidden group">
+          <div className="absolute right-0 top-0 w-12 h-12 bg-emerald-50 rounded-bl-full pointer-events-none" />
           <div className="flex justify-between items-center text-slate-400">
             <span className="text-[8px] font-bold uppercase tracking-wider">Sisa Budget</span>
-            <div className="p-1 bg-indigo-50 rounded text-indigo-600">
+            <div className="p-1 bg-emerald-50 rounded text-emerald-600">
               <FileText className="w-3.5 h-3.5" />
             </div>
           </div>
           <div className="mt-3">
-            <h3 className={`text-base font-black tracking-tight leading-tight truncate ${sisaBudget >= 0 ? "text-indigo-600" : "text-rose-600"}`}>
+            <h3 className={`text-base font-black tracking-tight leading-tight truncate ${sisaBudget >= 0 ? "text-emerald-600" : "text-rose-600"}`}>
               {sisaBudget >= 0 ? "+" : ""}
               {formatRp(sisaBudget)}
             </h3>
@@ -418,7 +418,7 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
         </div>
 
         {/* 7. Saving Rate Card */}
-        <div className="bg-indigo-600 text-white rounded-2xl p-4 flex items-center justify-between shadow-md min-h-[110px] relative overflow-hidden group">
+        <div className="bg-emerald-600 text-white rounded-2xl p-4 flex items-center justify-between shadow-md min-h-[110px] relative overflow-hidden group">
           <div className="relative w-12 h-12 shrink-0">
             <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36">
               <path
@@ -441,9 +441,9 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
             </div>
           </div>
           <div className="text-right">
-            <span className="text-[8px] font-bold text-indigo-200 uppercase tracking-widest">Saving Rate</span>
+            <span className="text-[8px] font-bold text-emerald-200 uppercase tracking-widest">Saving Rate</span>
             <h3 className="text-base font-black leading-none mt-0.5">{stats.savingRate}%</h3>
-            <p className="text-[7px] text-indigo-100/75 mt-1 leading-normal">% tersisa dari pemasukan</p>
+            <p className="text-[7px] text-emerald-100/75 mt-1 leading-normal">% tersisa dari pemasukan</p>
           </div>
         </div>
       </div>
@@ -482,8 +482,8 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
                   />
                   <defs>
                     <linearGradient id="healthGradDashboard" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#6366f1" />
-                      <stop offset="100%" stopColor="#a855f7" />
+                      <stop offset="0%" stopColor="#10b981" />
+                      <stop offset="100%" stopColor="#14b8a6" />
                     </linearGradient>
                   </defs>
                 </svg>
@@ -518,15 +518,15 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
         </div>
 
         {/* Ramalan Arus Kas / Forecast */}
-        <div className="bg-gradient-to-br from-indigo-600 to-purple-700 text-white rounded-2xl p-6 shadow-md relative overflow-hidden flex flex-col justify-between min-h-[220px]">
+        <div className="bg-gradient-to-br from-emerald-600 to-teal-700 text-white rounded-2xl p-6 shadow-md relative overflow-hidden flex flex-col justify-between min-h-[220px]">
           <div className="absolute top-0 right-0 p-4 opacity-15">
             <Zap className="w-16 h-16" />
           </div>
           <div>
-            <h3 className="text-xs font-bold text-indigo-200 uppercase tracking-widest">
+            <h3 className="text-xs font-bold text-emerald-200 uppercase tracking-widest">
               Ramalan Arus Kas
             </h3>
-            <p className="text-[8px] font-bold text-indigo-300 uppercase tracking-widest mt-0.5">
+            <p className="text-[8px] font-bold text-emerald-300 uppercase tracking-widest mt-0.5">
               Monthly Cashflow Forecast
             </p>
             <div className="flex items-center gap-2 mt-4">
@@ -535,7 +535,7 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
                 {forecast.val >= 0 ? "Surplus" : "Defisit"}
               </span>
             </div>
-            <p className="text-xs text-indigo-100/90 leading-relaxed font-semibold mt-3">
+            <p className="text-xs text-emerald-100/90 leading-relaxed font-semibold mt-3">
               {forecast.desc}
             </p>
           </div>
@@ -561,7 +561,7 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
                 </p>
               ) : (
                 topCategories.map((cat, i) => {
-                  const colors = ["bg-indigo-600", "bg-blue-500", "bg-purple-500"];
+                  const colors = ["bg-emerald-600", "bg-blue-500", "bg-teal-500"];
                   const pct = stats.expense > 0 ? Math.round((cat.amount / stats.expense) * 100) : 0;
                   return (
                     <div key={cat.name} className="space-y-1">
@@ -590,7 +590,7 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
       <div className="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm space-y-3">
         <div className="flex justify-between items-center text-xs font-bold text-slate-700">
           <span className="uppercase tracking-wider">Penggunaan Budget Bulan Ini</span>
-          <span className={budgetUsagePercentage >= 90 ? "text-rose-500 font-extrabold" : "text-indigo-600 font-extrabold"}>
+          <span className={budgetUsagePercentage >= 90 ? "text-rose-500 font-extrabold" : "text-emerald-600 font-extrabold"}>
             {budgetUsagePercentage}% terpakai
           </span>
         </div>
@@ -602,7 +602,7 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
                 ? "bg-rose-500"
                 : budgetUsagePercentage >= 75
                 ? "bg-amber-500"
-                : "bg-indigo-600"
+                : "bg-emerald-600"
             }`}
             style={{ width: `${Math.min(100, budgetUsagePercentage)}%` }}
           />
@@ -615,20 +615,20 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
       </div>
 
       {/* Smart Financial Advisor Alert Insight */}
-      <div className="bg-indigo-50/50 border border-indigo-100 rounded-2xl p-5 shadow-sm flex items-start gap-4">
-        <div className="p-2.5 bg-indigo-600 text-white rounded-xl shadow-md shrink-0">
+      <div className="bg-emerald-50/50 border border-emerald-100 rounded-2xl p-5 shadow-sm flex items-start gap-4">
+        <div className="p-2.5 bg-emerald-600 text-white rounded-xl shadow-md shrink-0">
           <Zap className="w-4 h-4" />
         </div>
         <div className="space-y-1.5 flex-1">
           <div className="flex justify-between items-center">
-            <h4 className="text-xs font-black text-indigo-900 uppercase tracking-wider">
+            <h4 className="text-xs font-black text-emerald-900 uppercase tracking-wider">
               Smart Financial Advisor
             </h4>
-            <span className="text-[8px] bg-indigo-100 text-indigo-600 border border-indigo-200 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">
+            <span className="text-[8px] bg-emerald-100 text-emerald-600 border border-emerald-200 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">
               INSIGHT
             </span>
           </div>
-          <p className="text-xs text-indigo-800 leading-relaxed font-semibold">
+          <p className="text-xs text-emerald-800 leading-relaxed font-semibold">
             {stats.income === 0 ? (
               "Belum ada pemasukan tercatat untuk periode ini. Masukkan data pemasukan utama Anda untuk menganalisa target menabung ideal 20%."
             ) : stats.cashflow < 0 ? (
@@ -654,10 +654,10 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
         <div className="space-y-4">
           {/* Kekayaan Bersih */}
           <div className="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm flex flex-col justify-between min-h-[125px] relative overflow-hidden group">
-            <div className="absolute right-0 top-0 w-24 h-24 bg-gradient-to-bl from-indigo-50 to-transparent rounded-bl-full pointer-events-none transition-all group-hover:scale-110" />
+            <div className="absolute right-0 top-0 w-24 h-24 bg-gradient-to-bl from-emerald-50 to-transparent rounded-bl-full pointer-events-none transition-all group-hover:scale-110" />
             <div>
               <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse" /> Kekayaan Bersih
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" /> Kekayaan Bersih
               </span>
               <h3 className="text-2xl font-black text-slate-800 tracking-tight mt-2">
                 {formatRp(bankStats.netWorth)}
@@ -673,10 +673,10 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
             {/* Deposito */}
             <div
               onClick={() => onSwitchTab("portfolio")}
-              className="bg-white rounded-2xl p-4 border border-slate-100 shadow-sm flex items-center justify-between hover:border-indigo-200 hover:shadow-md transition-all cursor-pointer group"
+              className="bg-white rounded-2xl p-4 border border-slate-100 shadow-sm flex items-center justify-between hover:border-emerald-200 hover:shadow-md transition-all cursor-pointer group"
             >
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-indigo-50 text-indigo-600 rounded-xl">
+                <div className="p-2 bg-emerald-50 text-emerald-600 rounded-xl">
                   <Percent className="w-4 h-4" />
                 </div>
                 <div>
@@ -688,7 +688,7 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
                   </span>
                 </div>
               </div>
-              <ChevronRight className="w-4 h-4 text-slate-300 group-hover:text-indigo-600 transition-colors" />
+              <ChevronRight className="w-4 h-4 text-slate-300 group-hover:text-emerald-600 transition-colors" />
             </div>
 
             {/* Kripto */}
@@ -742,11 +742,11 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
             <div className="bg-white rounded-2xl p-4 border border-slate-100 shadow-sm flex flex-col justify-between min-h-[76px]">
               <div className="flex justify-between items-center">
                 <span className="text-[8px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1">
-                  <FileText className="w-3.5 h-3.5 text-indigo-500" /> Status Budget
+                  <FileText className="w-3.5 h-3.5 text-emerald-500" /> Status Budget
                 </span>
                 <button
                   onClick={() => onSwitchTab("budget")}
-                  className="text-[8px] text-indigo-600 font-extrabold hover:underline cursor-pointer"
+                  className="text-[8px] text-emerald-600 font-extrabold hover:underline cursor-pointer"
                 >
                   Kelola &rarr;
                 </button>
@@ -756,7 +756,7 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
                 {budgetStats.totalAllocated === 0 ? (
                   <button
                     onClick={() => onSwitchTab("budget")}
-                    className="text-[10px] text-indigo-600 font-black hover:underline block text-left"
+                    className="text-[10px] text-emerald-600 font-black hover:underline block text-left"
                   >
                     Set Budget Sekarang
                   </button>
@@ -768,7 +768,7 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
                     </div>
                     <div className="w-full h-1 bg-slate-100 rounded-full overflow-hidden">
                       <div
-                        className="h-full bg-indigo-600 rounded-full"
+                        className="h-full bg-emerald-600 rounded-full"
                         style={{ width: `${Math.min(100, budgetStats.usagePct)}%` }}
                       />
                     </div>
@@ -782,11 +782,11 @@ export function DashboardView({ onSwitchTab }: { onSwitchTab: (tab: string) => v
           <div className="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm flex flex-col justify-between min-h-[125px] relative overflow-hidden group">
             <div className="flex justify-between items-center border-b border-slate-50 pb-2">
               <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1.5">
-                <Calendar className="w-4 h-4 text-indigo-500" /> Tagihan Langganan
+                <Calendar className="w-4 h-4 text-emerald-500" /> Tagihan Langganan
               </span>
               <button
                 onClick={() => onSwitchTab("subscription")}
-                className="text-[9px] text-indigo-600 font-extrabold hover:underline cursor-pointer"
+                className="text-[9px] text-emerald-600 font-extrabold hover:underline cursor-pointer"
               >
                 Detail &rarr;
               </button>

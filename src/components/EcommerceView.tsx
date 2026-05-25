@@ -142,7 +142,7 @@ export function EcommerceView() {
                 required
                 value={platformId}
                 onChange={(e) => setPlatformId(e.target.value)}
-                className="w-full rounded-xl border border-slate-200 p-3 text-sm bg-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full rounded-xl border border-slate-200 p-3 text-sm bg-white focus:ring-2 focus:ring-emerald-500 outline-none"
               >
                 <option value="">Pilih Platform...</option>
                 {ecomPlatforms.map((p) => (
@@ -164,7 +164,7 @@ export function EcommerceView() {
                 value={itemName}
                 onChange={(e) => setItemName(e.target.value)}
                 placeholder="Misal: Sepatu Olahraga Mizuno"
-                className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-emerald-500 outline-none"
               />
             </div>
 
@@ -177,7 +177,7 @@ export function EcommerceView() {
                 required
                 value={categorySelect}
                 onChange={(e) => setCategorySelect(e.target.value)}
-                className="w-full rounded-xl border border-slate-200 p-3 text-sm bg-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full rounded-xl border border-slate-200 p-3 text-sm bg-white focus:ring-2 focus:ring-emerald-500 outline-none"
               >
                 <option value="">-- Pilih Kategori --</option>
                 {categoryOptions.map((opt, i) => (
@@ -204,7 +204,7 @@ export function EcommerceView() {
                 value={amount}
                 onChange={(e) => handleAmountChange(e.target.value, setAmount)}
                 placeholder="Rp 0"
-                className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-emerald-500 outline-none"
               />
             </div>
 
@@ -219,7 +219,7 @@ export function EcommerceView() {
                   required
                   value={purchaseDate}
                   onChange={(e) => setPurchaseDate(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 p-3 text-xs focus:ring-2 focus:ring-indigo-500 outline-none"
+                  className="w-full rounded-xl border border-slate-200 p-3 text-xs focus:ring-2 focus:ring-emerald-500 outline-none"
                 />
               </div>
 
@@ -231,7 +231,7 @@ export function EcommerceView() {
                 <select
                   value={tenor}
                   onChange={(e) => setTenor(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 p-3 text-xs bg-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                  className="w-full rounded-xl border border-slate-200 p-3 text-xs bg-white focus:ring-2 focus:ring-emerald-500 outline-none"
                 >
                   <option value="1">Tunai (1x)</option>
                   <option value="3">3 Bulan</option>
@@ -251,7 +251,7 @@ export function EcommerceView() {
                 required
                 value={bankId}
                 onChange={(e) => setBankId(e.target.value)}
-                className="w-full rounded-xl border border-slate-200 p-3 text-sm bg-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full rounded-xl border border-slate-200 p-3 text-sm bg-white focus:ring-2 focus:ring-emerald-500 outline-none"
               >
                 <option value="">Pilih Akun Rekening...</option>
                 {banks.map((b) => (

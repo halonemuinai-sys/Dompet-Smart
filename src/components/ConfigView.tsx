@@ -263,7 +263,7 @@ export function ConfigView() {
       {/* Category Manager (Left/Right modular layout) */}
       <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm flex flex-col h-[650px]">
         <div className="flex items-center gap-3 mb-6">
-          <div className="p-2.5 bg-indigo-50 text-indigo-600 rounded-xl">
+          <div className="p-2.5 bg-emerald-50 text-emerald-600 rounded-xl">
             <Layers className="w-5 h-5" />
           </div>
           <div>
@@ -290,7 +290,7 @@ export function ConfigView() {
                 value={catName}
                 onChange={(e) => setCatName(e.target.value)}
                 placeholder="Misal: Pakaian"
-                className="w-full rounded-xl border border-slate-200 p-2 text-xs focus:ring-2 focus:ring-indigo-500 outline-none bg-white"
+                className="w-full rounded-xl border border-slate-200 p-2 text-xs focus:ring-2 focus:ring-emerald-500 outline-none bg-white"
               />
             </div>
             <div>
@@ -303,7 +303,7 @@ export function ConfigView() {
                   setCatType(e.target.value);
                   setCatParentId(""); // reset parent
                 }}
-                className="w-full rounded-xl border border-slate-200 p-2 text-xs bg-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full rounded-xl border border-slate-200 p-2 text-xs bg-white focus:ring-2 focus:ring-emerald-500 outline-none"
               >
                 <option value="income">Pemasukan (Income)</option>
                 <option value="expense">Pengeluaran (Expense)</option>
@@ -319,7 +319,7 @@ export function ConfigView() {
             <select
               value={catParentId}
               onChange={(e) => setCatParentId(e.target.value)}
-              className="w-full rounded-xl border border-slate-200 p-2 text-xs bg-white focus:ring-2 focus:ring-indigo-500 outline-none"
+              className="w-full rounded-xl border border-slate-200 p-2 text-xs bg-white focus:ring-2 focus:ring-emerald-500 outline-none"
             >
               <option value="">-- Kategori Utama --</option>
               {rootCategoryOptions.map((rc) => (
@@ -332,7 +332,7 @@ export function ConfigView() {
 
           <button
             type="submit"
-            className="w-full py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-xs shadow-md shadow-indigo-100 transition-all"
+            className="w-full py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-xs shadow-md shadow-emerald-100 transition-all"
           >
             Simpan Kategori
           </button>
@@ -571,7 +571,7 @@ export function ConfigView() {
                   value={profUsername}
                   onChange={(e) => setProfUsername(e.target.value)}
                   placeholder={user?.username || "admin"}
-                  className="w-full rounded-xl border border-slate-200 p-2 text-xs focus:ring-2 focus:ring-indigo-500 outline-none"
+                  className="w-full rounded-xl border border-slate-200 p-2 text-xs focus:ring-2 focus:ring-emerald-500 outline-none"
                 />
               </div>
               <div>
@@ -584,7 +584,7 @@ export function ConfigView() {
                   value={profPin}
                   onChange={(e) => setProfPin(e.target.value.replace(/\D/g, ""))}
                   placeholder="••••••"
-                  className="w-full rounded-xl border border-slate-200 p-2 text-xs focus:ring-2 focus:ring-indigo-500 outline-none"
+                  className="w-full rounded-xl border border-slate-200 p-2 text-xs focus:ring-2 focus:ring-emerald-500 outline-none"
                 />
               </div>
             </div>

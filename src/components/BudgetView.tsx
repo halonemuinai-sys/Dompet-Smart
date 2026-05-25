@@ -232,7 +232,7 @@ export function BudgetView() {
                 required
                 value={budgetMonth}
                 onChange={(e) => setBudgetMonth(e.target.value)}
-                className="w-full rounded-xl border border-slate-200 p-3 text-xs focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full rounded-xl border border-slate-200 p-3 text-xs focus:ring-2 focus:ring-emerald-500 outline-none"
               />
             </div>
 
@@ -245,7 +245,7 @@ export function BudgetView() {
                 required
                 value={budgetCategory}
                 onChange={(e) => setBudgetCategory(e.target.value)}
-                className="w-full rounded-xl border border-slate-200 p-3 text-sm bg-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full rounded-xl border border-slate-200 p-3 text-sm bg-white focus:ring-2 focus:ring-emerald-500 outline-none"
               >
                 <option value="">-- Pilih Kategori --</option>
                 {categoryOptions.map((opt, i) => (
@@ -272,13 +272,13 @@ export function BudgetView() {
                 value={budgetAmount}
                 onChange={(e) => handleAmountChange(e.target.value, setBudgetAmount)}
                 placeholder="Rp 0"
-                className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-emerald-500 outline-none"
               />
             </div>
 
             <button
               type="submit"
-              className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-sm shadow-md shadow-indigo-100 transition-transform hover:scale-[1.01]"
+              className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-sm shadow-md shadow-emerald-100 transition-transform hover:scale-[1.01]"
             >
               Simpan Limit Budget
             </button>
@@ -307,10 +307,10 @@ export function BudgetView() {
               <button
                 type="button"
                 onClick={handleCopyLastMonthBudget}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 text-[10px] font-bold rounded-xl transition-all border border-indigo-100 shadow-sm cursor-pointer"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-600 text-[10px] font-bold rounded-xl transition-all border border-emerald-100 shadow-sm cursor-pointer"
                 title="Salin semua limit budget dari bulan lalu ke bulan ini"
               >
-                <Plus className="w-3.5 h-3.5 text-indigo-500 animate-pulse" /> Salin Budget Bulan Lalu
+                <Plus className="w-3.5 h-3.5 text-emerald-500 animate-pulse" /> Salin Budget Bulan Lalu
               </button>
 
               <div className="flex items-center gap-2">
@@ -321,7 +321,7 @@ export function BudgetView() {
                   type="month"
                   value={filterMonth}
                   onChange={(e) => setFilterMonth(e.target.value)}
-                  className="rounded-xl border border-slate-200 px-3 py-1.5 text-xs font-bold text-slate-600 bg-white outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer shadow-sm"
+                  className="rounded-xl border border-slate-200 px-3 py-1.5 text-xs font-bold text-slate-600 bg-white outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer shadow-sm"
                 />
               </div>
             </div>
@@ -334,7 +334,7 @@ export function BudgetView() {
                   ? "bg-rose-500"
                   : budgetsThisMonth.totalPct >= 75
                   ? "bg-amber-500"
-                  : "bg-indigo-600"
+                  : "bg-emerald-600"
               }`}
               style={{ width: `${Math.min(100, budgetsThisMonth.totalPct)}%` }}
             />

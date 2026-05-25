@@ -166,7 +166,7 @@ export function SubscriptionView() {
                 value={subName}
                 onChange={(e) => setSubName(e.target.value)}
                 placeholder="Misal: Netflix, Spotify, iCloud"
-                className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-emerald-500 outline-none"
               />
             </div>
 
@@ -180,7 +180,7 @@ export function SubscriptionView() {
                 value={subEmail}
                 onChange={(e) => setSubEmail(e.target.value)}
                 placeholder="Misal: user@mail.com"
-                className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-emerald-500 outline-none"
               />
             </div>
 
@@ -195,7 +195,7 @@ export function SubscriptionView() {
                 value={subAmount}
                 onChange={(e) => handleAmountChange(e.target.value, setSubAmount)}
                 placeholder="Rp 0"
-                className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-emerald-500 outline-none"
               />
             </div>
 
@@ -208,7 +208,7 @@ export function SubscriptionView() {
                 <select
                   value={billingCycle}
                   onChange={(e) => setBillingCycle(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 p-3 text-xs bg-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                  className="w-full rounded-xl border border-slate-200 p-3 text-xs bg-white focus:ring-2 focus:ring-emerald-500 outline-none"
                 >
                   <option value="monthly">Bulanan</option>
                   <option value="yearly">Tahunan</option>
@@ -225,7 +225,7 @@ export function SubscriptionView() {
                   required
                   value={dueDate}
                   onChange={(e) => setDueDate(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 p-3 text-xs focus:ring-2 focus:ring-indigo-500 outline-none"
+                  className="w-full rounded-xl border border-slate-200 p-3 text-xs focus:ring-2 focus:ring-emerald-500 outline-none"
                 />
               </div>
             </div>
@@ -239,7 +239,7 @@ export function SubscriptionView() {
                 required
                 value={categorySelect}
                 onChange={(e) => setCategorySelect(e.target.value)}
-                className="w-full rounded-xl border border-slate-200 p-3 text-sm bg-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full rounded-xl border border-slate-200 p-3 text-sm bg-white focus:ring-2 focus:ring-emerald-500 outline-none"
               >
                 <option value="">-- Pilih Kategori --</option>
                 {categoryOptions.map((opt, i) => (
@@ -264,7 +264,7 @@ export function SubscriptionView() {
                 required
                 value={bankId}
                 onChange={(e) => setBankId(e.target.value)}
-                className="w-full rounded-xl border border-slate-200 p-3 text-sm bg-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full rounded-xl border border-slate-200 p-3 text-sm bg-white focus:ring-2 focus:ring-emerald-500 outline-none"
               >
                 <option value="">Pilih Akun Bank...</option>
                 {banks.map((b) => (

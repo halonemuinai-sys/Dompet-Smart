@@ -104,8 +104,8 @@ export default function Page() {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-slate-950 text-white font-sans">
         <div className="relative flex items-center justify-center">
-          <div className="w-16 h-16 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
-          <Wallet className="absolute w-6 h-6 text-indigo-400" />
+          <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+          <Wallet className="absolute w-6 h-6 text-emerald-400" />
         </div>
         <p className="mt-4 text-xs font-bold uppercase tracking-widest text-slate-400 animate-pulse">
           Memuat Smart Wallet...
@@ -119,12 +119,12 @@ export default function Page() {
     return (
       <div className="flex items-center justify-center min-h-screen bg-slate-950 font-sans relative overflow-hidden px-4">
         {/* Animated Background Gradients */}
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl animate-pulse duration-[8s]" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl animate-pulse duration-[12s]" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-600/20 rounded-full blur-3xl animate-pulse duration-[8s]" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-teal-600/20 rounded-full blur-3xl animate-pulse duration-[12s]" />
 
         <div className="w-full max-w-md bg-slate-900/60 backdrop-blur-xl border border-slate-800 rounded-3xl p-8 shadow-2xl relative z-10">
           <div className="text-center space-y-2 mb-8">
-            <div className="inline-flex items-center justify-center p-3 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl shadow-lg shadow-indigo-500/30">
+            <div className="inline-flex items-center justify-center p-3 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl shadow-lg shadow-emerald-500/30">
               <Lock className="w-6 h-6 text-white" />
             </div>
             <h1 className="text-2xl font-black text-white tracking-tight">Smart Wallet</h1>
@@ -149,7 +149,7 @@ export default function Page() {
                     value={usernameInput}
                     onChange={(e) => setUsernameInput(e.target.value)}
                     placeholder="Masukkan username"
-                    className="w-full bg-slate-950/80 border border-slate-800 rounded-2xl pl-10 pr-4 py-3 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all shadow-inner"
+                    className="w-full bg-slate-950/80 border border-slate-800 rounded-2xl pl-10 pr-4 py-3 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all shadow-inner"
                   />
                 </div>
               </div>
@@ -165,7 +165,7 @@ export default function Page() {
                   value={pinInput}
                   onChange={(e) => setPinInput(e.target.value.replace(/\D/g, ""))}
                   placeholder="••••••"
-                  className="w-full bg-slate-950/80 border border-slate-800 rounded-2xl px-4 py-3 text-center text-xl tracking-[0.75em] font-black text-indigo-400 placeholder-slate-700 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all shadow-inner"
+                  className="w-full bg-slate-950/80 border border-slate-800 rounded-2xl px-4 py-3 text-center text-xl tracking-[0.75em] font-black text-emerald-400 placeholder-slate-700 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all shadow-inner"
                 />
               </div>
             </div>
@@ -180,7 +180,7 @@ export default function Page() {
             <button
               type="submit"
               disabled={isSubmittingLogin}
-              className="w-full bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white rounded-2xl py-3.5 font-bold text-sm shadow-lg shadow-indigo-500/25 transition-transform hover:scale-[1.01] active:scale-[0.99] disabled:opacity-55 disabled:cursor-not-allowed"
+              className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white rounded-2xl py-3.5 font-bold text-sm shadow-lg shadow-emerald-500/25 transition-transform hover:scale-[1.01] active:scale-[0.99] disabled:opacity-55 disabled:cursor-not-allowed"
             >
               {isSubmittingLogin ? "Memproses..." : "Masuk Ke Dashboard"}
             </button>
@@ -225,7 +225,7 @@ export default function Page() {
         {/* Brand */}
         <div className={`p-4 border-b border-slate-800 flex items-center justify-between ${isSidebarCollapsed ? "flex-col gap-4 py-6" : ""}`}>
           <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl shadow-md shadow-indigo-500/20 text-white animate-float">
+            <div className="p-2.5 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl shadow-md shadow-emerald-500/20 text-white animate-float">
               <Wallet className="w-5 h-5" />
             </div>
             {!isSidebarCollapsed && (
@@ -241,7 +241,7 @@ export default function Page() {
               onClick={() => refreshData()}
               disabled={syncing}
               className={`p-1.5 rounded-lg border border-slate-800 hover:border-slate-700 hover:bg-slate-800 text-slate-500 hover:text-white transition-all ${
-                syncing ? "animate-spin text-indigo-400" : ""
+                syncing ? "animate-spin text-emerald-400" : ""
               }`}
               title="Sinkronisasi Data"
             >
@@ -272,7 +272,7 @@ export default function Page() {
                   isSidebarCollapsed ? "justify-center p-3" : "gap-3.5 px-4 py-3"
                 } ${
                   isActive
-                    ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/20"
+                    ? "bg-emerald-600 text-white shadow-lg shadow-emerald-600/20"
                     : "hover:bg-slate-800 hover:text-white hover:scale-[1.02] active:scale-[0.98]"
                 }`}
                 title={isSidebarCollapsed ? tab.label : undefined}
@@ -288,7 +288,7 @@ export default function Page() {
         <div className="p-4 border-t border-slate-800 bg-slate-950/20">
           <div className={`flex items-center justify-between ${isSidebarCollapsed ? "flex-col gap-4" : "px-2"}`}>
             <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+              <div className="w-7 h-7 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
                 <UserIcon className="w-3.5 h-3.5" />
               </div>
               {!isSidebarCollapsed && (
@@ -317,7 +317,7 @@ export default function Page() {
       {/* MOBILE HEADER & MOBILE MENU */}
       <div className="lg:hidden fixed top-0 inset-x-0 h-16 bg-slate-900 border-b border-slate-800 text-white z-50 flex items-center justify-between px-4">
         <div className="flex items-center gap-2.5">
-          <div className="p-2 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg text-white">
+          <div className="p-2 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-lg text-white">
             <Wallet className="w-4 h-4" />
           </div>
           <span className="text-sm font-black tracking-tight">Smart Wallet</span>
@@ -328,7 +328,7 @@ export default function Page() {
             onClick={() => refreshData()}
             disabled={syncing}
             className={`p-2 rounded-lg border border-slate-800 bg-slate-950/40 ${
-              syncing ? "text-indigo-400" : "text-slate-400"
+              syncing ? "text-emerald-400" : "text-slate-400"
             }`}
           >
             <RefreshCw className={`w-3.5 h-3.5 ${syncing ? "animate-spin" : ""}`} />
@@ -357,7 +357,7 @@ export default function Page() {
                     setIsMobileMenuOpen(false);
                   }}
                   className={`w-full flex items-center gap-3.5 px-4 py-3 rounded-xl text-xs font-bold transition-all ${
-                    isActive ? "bg-indigo-600 text-white shadow-md" : "hover:bg-slate-800"
+                    isActive ? "bg-emerald-600 text-white shadow-md" : "hover:bg-slate-800"
                   }`}
                 >
                   <Icon className="w-4 h-4 shrink-0" />
@@ -369,7 +369,7 @@ export default function Page() {
 
           <div className="bg-slate-950 p-4 border-t border-slate-800 flex items-center justify-between text-slate-400">
             <div className="flex items-center gap-2">
-              <UserIcon className="w-4 h-4 text-indigo-400" />
+              <UserIcon className="w-4 h-4 text-emerald-400" />
               <div className="text-left">
                 <p className="text-xs font-bold text-white leading-tight">{user.username}</p>
                 <span className="text-[8px] uppercase tracking-wider text-slate-500">{user.role}</span>

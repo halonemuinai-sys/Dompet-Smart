@@ -203,7 +203,7 @@ export function PortfolioView() {
               onClick={() => setActiveTab("deposits")}
               className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all ${
                 activeTab === "deposits"
-                  ? "bg-white text-indigo-600 shadow-sm"
+                  ? "bg-white text-emerald-600 shadow-sm"
                   : "text-slate-500 hover:text-slate-800"
               }`}
             >
@@ -213,7 +213,7 @@ export function PortfolioView() {
               onClick={() => setActiveTab("cryptos")}
               className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all ${
                 activeTab === "cryptos"
-                  ? "bg-white text-indigo-600 shadow-sm"
+                  ? "bg-white text-emerald-600 shadow-sm"
                   : "text-slate-500 hover:text-slate-800"
               }`}
             >
@@ -240,7 +240,7 @@ export function PortfolioView() {
                   value={depoName}
                   onChange={(e) => setDepoName(e.target.value)}
                   placeholder="Misal: Deposito Berjangka BCA"
-                  className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                  className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-emerald-500 outline-none"
                 />
               </div>
 
@@ -252,7 +252,7 @@ export function PortfolioView() {
                   required
                   value={depoBankId}
                   onChange={(e) => setDepoBankId(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 p-3 text-sm bg-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                  className="w-full rounded-xl border border-slate-200 p-3 text-sm bg-white focus:ring-2 focus:ring-emerald-500 outline-none"
                 >
                   <option value="">Pilih Bank...</option>
                   {banks.map((b) => (
@@ -273,7 +273,7 @@ export function PortfolioView() {
                   value={depoAmount}
                   onChange={(e) => handleAmountChange(e.target.value, setDepoAmount)}
                   placeholder="Rp 0"
-                  className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                  className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-emerald-500 outline-none"
                 />
               </div>
 
@@ -289,7 +289,7 @@ export function PortfolioView() {
                     value={depoRate}
                     onChange={(e) => setDepoRate(e.target.value)}
                     placeholder="Misal: 5.25"
-                    className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                    className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-emerald-500 outline-none"
                   />
                 </div>
                 <div>
@@ -302,7 +302,7 @@ export function PortfolioView() {
                     value={depoTenor}
                     onChange={(e) => setDepoTenor(e.target.value)}
                     placeholder="Misal: 3, 6, 12"
-                    className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                    className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-emerald-500 outline-none"
                   />
                 </div>
               </div>
@@ -316,13 +316,13 @@ export function PortfolioView() {
                   required
                   value={depoStartDate}
                   onChange={(e) => setDepoStartDate(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 p-3 text-xs focus:ring-2 focus:ring-indigo-500 outline-none"
+                  className="w-full rounded-xl border border-slate-200 p-3 text-xs focus:ring-2 focus:ring-emerald-500 outline-none"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-sm shadow-md transition-all hover:scale-[1.01]"
+                className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-sm shadow-md transition-all hover:scale-[1.01]"
               >
                 Simpan Deposito
               </button>
@@ -343,7 +343,7 @@ export function PortfolioView() {
                   value={cryptoName}
                   onChange={(e) => setCryptoName(e.target.value)}
                   placeholder="Misal: BTC, ETH, USDT"
-                  className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                  className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-emerald-500 outline-none"
                 />
               </div>
 
@@ -358,7 +358,7 @@ export function PortfolioView() {
                   value={cryptoQty}
                   onChange={(e) => setCryptoQty(e.target.value)}
                   placeholder="Misal: 0.025"
-                  className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                  className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-emerald-500 outline-none"
                 />
               </div>
 
@@ -372,13 +372,13 @@ export function PortfolioView() {
                   value={cryptoVal}
                   onChange={(e) => handleAmountChange(e.target.value, setCryptoVal)}
                   placeholder="Rp 0"
-                  className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                  className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-emerald-500 outline-none"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-sm shadow-md transition-all hover:scale-[1.01]"
+                className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-sm shadow-md transition-all hover:scale-[1.01]"
               >
                 Simpan Koin
               </button>
@@ -399,7 +399,7 @@ export function PortfolioView() {
               {formatRp(activeTab === "deposits" ? depoTotal : cryptoTotal)}
             </h3>
           </div>
-          <div className="p-3 bg-indigo-100 text-indigo-600 rounded-2xl">
+          <div className="p-3 bg-emerald-100 text-emerald-600 rounded-2xl">
             {activeTab === "deposits" ? <Lock className="w-6 h-6" /> : <TrendingUp className="w-6 h-6" />}
           </div>
         </div>
@@ -484,7 +484,7 @@ export function PortfolioView() {
                     <p className="text-[10px] text-slate-400 font-semibold mt-1">
                       Jumlah: <span className="font-bold text-slate-700">{c.quantity} koin</span>
                     </p>
-                    <p className="text-xs font-black text-indigo-600 mt-2">
+                    <p className="text-xs font-black text-emerald-600 mt-2">
                       Nilai Rupiah: {formatRp(c.value_idr)}
                     </p>
                   </div>
@@ -492,7 +492,7 @@ export function PortfolioView() {
                   <div className="flex items-center gap-2 shrink-0 self-end sm:self-auto">
                     <button
                       onClick={() => handleEditCryptoClick(c)}
-                      className="py-1.5 px-3 bg-indigo-50 text-indigo-600 hover:bg-indigo-100 rounded-xl font-bold text-[10px] border border-indigo-100 flex items-center gap-1 transition-all"
+                      className="py-1.5 px-3 bg-emerald-50 text-emerald-600 hover:bg-emerald-100 rounded-xl font-bold text-[10px] border border-emerald-100 flex items-center gap-1 transition-all"
                     >
                       <Edit2 className="w-3.5 h-3.5" /> Update Nilai
                     </button>
@@ -532,7 +532,7 @@ export function PortfolioView() {
                 required
                 value={editCryptoQty}
                 onChange={(e) => setEditCryptoQty(e.target.value)}
-                className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-emerald-500 outline-none"
               />
             </div>
 
@@ -545,7 +545,7 @@ export function PortfolioView() {
                 required
                 value={editCryptoVal}
                 onChange={(e) => handleAmountChange(e.target.value, setEditCryptoVal)}
-                className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-emerald-500 outline-none"
               />
             </div>
 
@@ -562,7 +562,7 @@ export function PortfolioView() {
               </button>
               <button
                 type="submit"
-                className="flex-1 py-3 rounded-xl bg-indigo-600 text-white font-semibold hover:bg-indigo-700 text-sm transition-all shadow-md shadow-indigo-100"
+                className="flex-1 py-3 rounded-xl bg-emerald-600 text-white font-semibold hover:bg-emerald-700 text-sm transition-all shadow-md shadow-emerald-100"
               >
                 Update Aset
               </button>

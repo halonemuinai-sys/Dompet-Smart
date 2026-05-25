@@ -145,7 +145,7 @@ export function ReportView() {
           </h1>
           <p className="text-slate-400 text-xs font-semibold uppercase tracking-wider mt-1">
             Analisis Outlook Keuangan Periode:{" "}
-            <span className="text-indigo-600 font-black">
+            <span className="text-emerald-600 font-black">
               {new Date(parseInt(selectedYear), parseInt(selectedMonth) - 1).toLocaleString("id-ID", {
                 month: "long",
                 year: "numeric",
@@ -160,7 +160,7 @@ export function ReportView() {
           <select
             value={selectedMonth}
             onChange={(e) => setSelectedMonth(e.target.value)}
-            className="rounded-xl border border-slate-200 px-3 py-2 text-xs font-bold text-slate-600 bg-white outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer shadow-sm"
+            className="rounded-xl border border-slate-200 px-3 py-2 text-xs font-bold text-slate-600 bg-white outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer shadow-sm"
           >
             <option value="01">Januari</option>
             <option value="02">Februari</option>
@@ -178,7 +178,7 @@ export function ReportView() {
           <select
             value={selectedYear}
             onChange={(e) => setSelectedYear(e.target.value)}
-            className="rounded-xl border border-slate-200 px-3 py-2 text-xs font-bold text-slate-600 bg-white outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer shadow-sm"
+            className="rounded-xl border border-slate-200 px-3 py-2 text-xs font-bold text-slate-600 bg-white outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer shadow-sm"
           >
             <option value="2024">2024</option>
             <option value="2025">2025</option>
@@ -225,30 +225,30 @@ export function ReportView() {
         </div>
 
         {/* Net Flow Card */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between group hover:border-indigo-200 transition-colors">
+        <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between group hover:border-emerald-200 transition-colors">
           <div className="space-y-1">
             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
               Selisih Kas / Savings
             </span>
-            <h3 className={`text-xl font-black ${reportData.netCashFlow >= 0 ? "text-indigo-600" : "text-rose-600"}`}>
+            <h3 className={`text-xl font-black ${reportData.netCashFlow >= 0 ? "text-emerald-600" : "text-rose-600"}`}>
               {reportData.netCashFlow >= 0 ? "+" : ""}
               {formatRp(reportData.netCashFlow)}
             </h3>
           </div>
-          <div className="p-3 bg-indigo-50 rounded-xl text-indigo-600">
+          <div className="p-3 bg-emerald-50 rounded-xl text-emerald-600">
             <Wallet className="w-5 h-5" />
           </div>
         </div>
 
         {/* Savings Rate Card */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between group hover:border-purple-200 transition-colors">
+        <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between group hover:border-teal-200 transition-colors">
           <div className="space-y-1">
             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
               Saving Rate Bulanan
             </span>
-            <h3 className="text-xl font-black text-purple-600">{reportData.savingRate}%</h3>
+            <h3 className="text-xl font-black text-teal-600">{reportData.savingRate}%</h3>
           </div>
-          <div className="p-3 bg-purple-50 rounded-xl text-purple-600">
+          <div className="p-3 bg-teal-50 rounded-xl text-teal-600">
             <Percent className="w-5 h-5" />
           </div>
         </div>
@@ -429,7 +429,7 @@ export function ReportView() {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Cari transaksi..."
-              className="w-full pl-9 pr-4 py-2 rounded-xl border border-slate-200 text-xs bg-slate-50/50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all shadow-inner"
+              className="w-full pl-9 pr-4 py-2 rounded-xl border border-slate-200 text-xs bg-slate-50/50 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all shadow-inner"
             />
           </div>
         </div>

@@ -363,7 +363,7 @@ export function TransactionForm() {
               onClick={() => setActiveSubTab("transfer")}
               className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-1 ${
                 activeSubTab === "transfer"
-                  ? "bg-white text-indigo-600 shadow-sm"
+                  ? "bg-white text-emerald-600 shadow-sm"
                   : "text-slate-500 hover:text-slate-800"
               }`}
             >
@@ -383,7 +383,7 @@ export function TransactionForm() {
                 value={amount}
                 onChange={(e) => handleAmountChange(e.target.value, setAmount)}
                 placeholder="Rp 0"
-                className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none shadow-sm transition-all"
+                className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-emerald-500 outline-none shadow-sm transition-all"
               />
             </div>
 
@@ -398,7 +398,7 @@ export function TransactionForm() {
                   required
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 p-3 text-xs focus:ring-2 focus:ring-indigo-500 outline-none shadow-sm transition-all"
+                  className="w-full rounded-xl border border-slate-200 p-3 text-xs focus:ring-2 focus:ring-emerald-500 outline-none shadow-sm transition-all"
                 />
               </div>
 
@@ -413,7 +413,7 @@ export function TransactionForm() {
                     value={discount}
                     onChange={(e) => handleAmountChange(e.target.value, setDiscount)}
                     placeholder="Rp 0"
-                    className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none shadow-sm transition-all"
+                    className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-emerald-500 outline-none shadow-sm transition-all"
                   />
                 </div>
               ) : (
@@ -431,7 +431,7 @@ export function TransactionForm() {
                   required
                   value={categorySelect}
                   onChange={(e) => setCategorySelect(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 p-3 text-sm bg-white focus:ring-2 focus:ring-indigo-500 outline-none shadow-sm"
+                  className="w-full rounded-xl border border-slate-200 p-3 text-sm bg-white focus:ring-2 focus:ring-emerald-500 outline-none shadow-sm"
                 >
                   <option value="">-- Pilih Kategori --</option>
                   {categoryOptions.map((opt, i) => (
@@ -459,7 +459,7 @@ export function TransactionForm() {
                   required
                   value={bankId}
                   onChange={(e) => setBankId(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 p-3 text-xs bg-white focus:ring-2 focus:ring-indigo-500 outline-none shadow-sm"
+                  className="w-full rounded-xl border border-slate-200 p-3 text-xs bg-white focus:ring-2 focus:ring-emerald-500 outline-none shadow-sm"
                 >
                   <option value="">Pilih...</option>
                   {banks.map((b) => (
@@ -480,7 +480,7 @@ export function TransactionForm() {
                     required
                     value={transferToBankId}
                     onChange={(e) => setTransferToBankId(e.target.value)}
-                    className="w-full rounded-xl border border-slate-200 p-3 text-xs bg-white focus:ring-2 focus:ring-indigo-500 outline-none shadow-sm"
+                    className="w-full rounded-xl border border-slate-200 p-3 text-xs bg-white focus:ring-2 focus:ring-emerald-500 outline-none shadow-sm"
                   >
                     <option value="">Pilih...</option>
                     {banks.map((b) => (
@@ -505,7 +505,7 @@ export function TransactionForm() {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Makan siang, bensin, dll"
-                className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none shadow-sm transition-all"
+                className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-emerald-500 outline-none shadow-sm transition-all"
               />
             </div>
 
@@ -516,7 +516,7 @@ export function TransactionForm() {
                   ? "bg-rose-500 shadow-rose-200/50 hover:bg-rose-600"
                   : activeSubTab === "income"
                   ? "bg-emerald-500 shadow-emerald-200/50 hover:bg-emerald-600"
-                  : "bg-indigo-600 shadow-indigo-200/50 hover:bg-indigo-700"
+                  : "bg-emerald-600 shadow-emerald-200/50 hover:bg-emerald-700"
               }`}
             >
               Simpan Transaksi
@@ -540,7 +540,7 @@ export function TransactionForm() {
                     required
                     value={quickBankId}
                     onChange={(e) => setQuickBankId(e.target.value)}
-                    className="w-full rounded-xl border border-slate-200 p-2 text-xs bg-white focus:ring-2 focus:ring-indigo-500 outline-none shadow-sm"
+                    className="w-full rounded-xl border border-slate-200 p-2 text-xs bg-white focus:ring-2 focus:ring-emerald-500 outline-none shadow-sm"
                   >
                     <option value="">Pilih...</option>
                     {banks.map((b) => (
@@ -559,7 +559,7 @@ export function TransactionForm() {
                     required
                     value={quickDate}
                     onChange={(e) => setQuickDate(e.target.value)}
-                    className="w-full rounded-xl border border-slate-200 p-2 text-xs focus:ring-2 focus:ring-indigo-500 outline-none shadow-sm"
+                    className="w-full rounded-xl border border-slate-200 p-2 text-xs focus:ring-2 focus:ring-emerald-500 outline-none shadow-sm"
                   />
                 </div>
               </div>
@@ -631,7 +631,7 @@ export function TransactionForm() {
                 type="month"
                 value={filterMonth}
                 onChange={(e) => setFilterMonth(e.target.value)}
-                className="rounded-xl border border-slate-200 px-3 py-1.5 text-xs font-bold text-slate-600 bg-white outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer shadow-sm"
+                className="rounded-xl border border-slate-200 px-3 py-1.5 text-xs font-bold text-slate-600 bg-white outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer shadow-sm"
               />
             </div>
           </div>
@@ -729,7 +729,7 @@ export function TransactionForm() {
                               <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                                 <button
                                   onClick={() => handleEditClick(tx)}
-                                  className="p-1 hover:bg-slate-100 rounded text-slate-400 hover:text-indigo-600"
+                                  className="p-1 hover:bg-slate-100 rounded text-slate-400 hover:text-emerald-600"
                                 >
                                   <Edit2 className="w-3.5 h-3.5" />
                                 </button>
@@ -774,7 +774,7 @@ export function TransactionForm() {
                 required
                 value={editAmount}
                 onChange={(e) => handleAmountChange(e.target.value, setEditAmount)}
-                className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-emerald-500 outline-none"
               />
             </div>
 
@@ -789,7 +789,7 @@ export function TransactionForm() {
                   required
                   value={editDate}
                   onChange={(e) => setEditDate(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 p-3 text-xs focus:ring-2 focus:ring-indigo-500 outline-none"
+                  className="w-full rounded-xl border border-slate-200 p-3 text-xs focus:ring-2 focus:ring-emerald-500 outline-none"
                 />
               </div>
 
@@ -803,7 +803,7 @@ export function TransactionForm() {
                     type="text"
                     value={editDiscount}
                     onChange={(e) => handleAmountChange(e.target.value, setEditDiscount)}
-                    className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                    className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-emerald-500 outline-none"
                   />
                 </div>
               ) : (
@@ -822,7 +822,7 @@ export function TransactionForm() {
                     required
                     value={editCategorySelect}
                     onChange={(e) => setEditCategorySelect(e.target.value)}
-                    className="w-full rounded-xl border border-slate-200 p-3 text-sm bg-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                    className="w-full rounded-xl border border-slate-200 p-3 text-sm bg-white focus:ring-2 focus:ring-emerald-500 outline-none"
                   >
                     {editCategoryOptions.map((opt, i) => (
                       <option
@@ -847,7 +847,7 @@ export function TransactionForm() {
                 required
                 value={editBankId}
                 onChange={(e) => setEditBankId(e.target.value)}
-                className="w-full rounded-xl border border-slate-200 p-3 text-sm bg-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full rounded-xl border border-slate-200 p-3 text-sm bg-white focus:ring-2 focus:ring-emerald-500 outline-none"
               >
                 {banks.map((b) => (
                   <option key={b.id} value={b.id}>
@@ -866,7 +866,7 @@ export function TransactionForm() {
                 type="text"
                 value={editDescription}
                 onChange={(e) => setEditDescription(e.target.value)}
-                className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-emerald-500 outline-none"
               />
             </div>
 
@@ -883,7 +883,7 @@ export function TransactionForm() {
               </button>
               <button
                 type="submit"
-                className="flex-1 py-3 rounded-xl bg-indigo-600 text-white font-semibold hover:bg-indigo-700 text-sm transition-all shadow-md shadow-indigo-100"
+                className="flex-1 py-3 rounded-xl bg-emerald-600 text-white font-semibold hover:bg-emerald-700 text-sm transition-all shadow-md shadow-emerald-100"
               >
                 Simpan Perubahan
               </button>

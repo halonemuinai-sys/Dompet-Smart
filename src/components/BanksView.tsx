@@ -164,16 +164,16 @@ export function BanksView() {
     const type = b.account_type;
     if (type === "ewallet") {
       if (b.name === "GoPay") return "from-emerald-500 to-green-600 text-white shadow-emerald-200/50";
-      if (b.name === "OVO") return "from-purple-600 to-violet-700 text-white shadow-purple-200/50";
+      if (b.name === "OVO") return "from-teal-600 to-violet-700 text-white shadow-teal-200/50";
       if (b.name === "DANA") return "from-blue-500 to-sky-600 text-white shadow-blue-200/50";
       if (b.name === "ShopeePay") return "from-orange-500 to-red-600 text-white shadow-orange-200/50";
       return "from-teal-500 to-emerald-600 text-white shadow-teal-200/50";
     }
-    if (type === "emoney") return "from-indigo-500 to-blue-600 text-white shadow-indigo-200/50";
+    if (type === "emoney") return "from-emerald-500 to-blue-600 text-white shadow-emerald-200/50";
     if (type === "credit_card") return "from-slate-800 to-slate-950 text-white shadow-slate-300";
     if (type === "paylater") return "from-rose-500 to-red-600 text-white shadow-rose-200/50";
     if (type === "cash") return "from-amber-400 to-orange-500 text-white shadow-amber-200/50";
-    return "from-sky-600 to-indigo-700 text-white shadow-blue-200/50"; // default: bank
+    return "from-sky-600 to-emerald-700 text-white shadow-blue-200/50"; // default: bank
   };
 
   return (
@@ -200,7 +200,7 @@ export function BanksView() {
                 onClick={() => setActiveFilter(f.id)}
                 className={`py-2 px-3 text-xs font-bold rounded-xl border text-center transition-all ${
                   activeFilter === f.id
-                    ? "bg-indigo-50 border-indigo-200 text-indigo-700 shadow-sm"
+                    ? "bg-emerald-50 border-emerald-200 text-emerald-700 shadow-sm"
                     : "bg-slate-50/50 border-slate-100 text-slate-500 hover:bg-slate-50"
                 } ${f.id === "all" ? "col-span-2" : ""}`}
               >
@@ -224,7 +224,7 @@ export function BanksView() {
               <select
                 value={bankType}
                 onChange={(e) => setBankType(e.target.value)}
-                className="w-full rounded-xl border border-slate-200 p-3 text-sm bg-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full rounded-xl border border-slate-200 p-3 text-sm bg-white focus:ring-2 focus:ring-emerald-500 outline-none"
               >
                 <option value="bank">Bank / Rekening</option>
                 <option value="ewallet">E-Wallet</option>
@@ -245,7 +245,7 @@ export function BanksView() {
                   required
                   value={ewalletBrand}
                   onChange={(e) => setEwalletBrand(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 p-3 text-sm bg-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                  className="w-full rounded-xl border border-slate-200 p-3 text-sm bg-white focus:ring-2 focus:ring-emerald-500 outline-none"
                 >
                   <option value="">Pilih Brand...</option>
                   {EWALLET_BRANDS.map((b) => (
@@ -264,7 +264,7 @@ export function BanksView() {
                   required
                   value={emoneyBrand}
                   onChange={(e) => setEmoneyBrand(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 p-3 text-sm bg-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                  className="w-full rounded-xl border border-slate-200 p-3 text-sm bg-white focus:ring-2 focus:ring-emerald-500 outline-none"
                 >
                   <option value="">Pilih Jenis...</option>
                   {EMONEY_BRANDS.map((b) => (
@@ -293,7 +293,7 @@ export function BanksView() {
                       ? "Misal: Dompet Utama"
                       : "Misal: BCA, Bank Mandiri"
                   }
-                  className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                  className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-emerald-500 outline-none"
                 />
               </div>
             )}
@@ -309,7 +309,7 @@ export function BanksView() {
                   value={accountNumber}
                   onChange={(e) => setAccountNumber(e.target.value)}
                   placeholder="Misal: 08123456... atau 123456..."
-                  className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                  className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-emerald-500 outline-none"
                 />
               </div>
             )}
@@ -325,13 +325,13 @@ export function BanksView() {
                 value={initialBalance}
                 onChange={(e) => handleAmountChange(e.target.value, setInitialBalance)}
                 placeholder="Rp 0"
-                className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full rounded-xl border border-slate-200 p-3 text-sm focus:ring-2 focus:ring-emerald-500 outline-none"
               />
             </div>
 
             <button
               type="submit"
-              className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-sm shadow-md shadow-indigo-100 hover:scale-[1.01] active:scale-[0.99] transition-transform"
+              className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-sm shadow-md shadow-emerald-100 hover:scale-[1.01] active:scale-[0.99] transition-transform"
             >
               Simpan Rekening
             </button>
