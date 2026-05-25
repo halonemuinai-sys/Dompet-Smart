@@ -1,0 +1,204 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  username  String   @unique
+  pin       String   
+  role      String   @default("admin") 
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model Category {
+  id        String   @id @default(uuid())
+  name      String
+  type      String   // "income" | "expense" | "inventory"
+  parentId  String?  @map("parent_id")
+  parent    Category?  @relation("CategorySelf", fields: [parentId], references: [id], onDelete: Cascade)
+  children  Category[] @relation("CategorySelf")
+  
+  transactions     Transaction[] @relation("CategoryTransactions")
+  subTransactions  Transaction[] @relation("SubCategoryTransactions")
+  fixedCosts       FixedCost[]   @relation("CategoryFixedCosts")
+  subFixedCosts    FixedCost[]   @relation("SubCategoryFixedCosts")
+  inventories      Inventory[]
+  subscriptions    Subscription[]
+  budgets          Budget[]
+  ecommerceTxns    EcommerceTransaction[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("categories")
+}
+
+model Bank {
+  id             String   @id @default(uuid())
+  name           String
+  accountNumber  String   @map("account_number")
+  initialBalance Decimal  @map("initial_balance") @db.Decimal(15, 2)
+  accountType    String   @map("account_type") // "bank" | "ewallet" | "emoney" | "paylater" | "credit_card" | "cash"
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  transactions     Transaction[]
+  deposits         Deposit[]
+  ecommerceTxns    EcommerceTransaction[]
+  subscriptions    Subscription[]
+
+  @@map("banks")
+}
+
+model Transaction {
+  id             String   @id @default(uuid())
+  type           String   // "income" | "expense" | "transfer"
+  categoryId     String   @map("category_id")
+  category       Category @relation("CategoryTransactions", fields: [categoryId], references: [id])
+  subCategoryId  String?  @map("sub_category_id")
+  subCategory    Category? @relation("SubCategoryTransactions", fields: [subCategoryId], references: [id])
+  amount         Decimal  @db.Decimal(15, 2)
+  date           DateTime @db.Date
+  description    String?
+  bankId         String   @map("bank_id")
+  bank           Bank     @relation(fields: [bankId], references: [id], onDelete: Cascade)
+  discount       Decimal  @default(0) @db.Decimal(15, 2)
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  ecommerceTxn   EcommerceTransaction?
+
+  @@map("transactions")
+}
+
+model FixedCost {
+  id             String   @id @default(uuid())
+  name           String
+  amount         Decimal  @db.Decimal(15, 2)
+  categoryId     String   @map("category_id")
+  category       Category @relation("CategoryFixedCosts", fields: [categoryId], references: [id])
+  subCategoryId  String?  @map("sub_category_id")
+  subCategory    Category? @relation("SubCategoryFixedCosts", fields: [subCategoryId], references: [id])
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  @@map("fixed_costs")
+}
+
+model Deposit {
+  id           String   @id @default(uuid())
+  name         String
+  bankId       String   @map("bank_id")
+  bank         Bank     @relation(fields: [bankId], references: [id], onDelete: Cascade)
+  amount       Decimal  @db.Decimal(15, 2)
+  rate         Decimal  @db.Decimal(5, 2) 
+  tenor        Int      
+  startDate    DateTime @map("start_date") @db.Date
+  maturityDate DateTime @map("maturity_date") @db.Date
+  status       String   @default("active") 
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("deposits")
+}
+
+model Crypto {
+  id        String   @id @default(uuid())
+  name      String   
+  quantity  Decimal  @db.Decimal(18, 8)
+  valueIdr  Decimal  @map("value_idr") @db.Decimal(15, 2)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("cryptos")
+}
+
+model EcommercePlatform {
+  id        String   @id @default(uuid())
+  platform  String   
+  storeName String?  @map("store_name")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  transactions EcommerceTransaction[]
+
+  @@map("ecommerce_platforms")
+}
+
+model EcommerceTransaction {
+  id           String            @id @default(uuid())
+  date         DateTime          @db.Date
+  platformId   String            @map("platform_id")
+  platform     EcommercePlatform @relation(fields: [platformId], references: [id], onDelete: Cascade)
+  itemName     String            @map("item_name")
+  categoryId   String            @map("category_id")
+  category     Category          @relation(fields: [categoryId], references: [id])
+  amount       Decimal           @db.Decimal(15, 2)
+  bankId       String            @map("bank_id")
+  bank         Bank              @relation(fields: [bankId], references: [id])
+  tenor        Int               @default(1) 
+  txnId        String?           @unique @map("txn_id")
+  transaction  Transaction?      @relation(fields: [txnId], references: [id], onDelete: Cascade)
+  createdAt    DateTime          @default(now()) @map("created_at")
+  updatedAt    DateTime          @updatedAt @map("updated_at")
+
+  inventories  Inventory[]
+
+  @@map("ecommerce_transactions")
+}
+
+model Inventory {
+  id             String               @id @default(uuid())
+  itemName       String               @map("item_name")
+  categoryId     String               @map("category_id")
+  category       Category             @relation(fields: [categoryId], references: [id])
+  purchasePrice  Decimal              @map("purchase_price") @db.Decimal(15, 2)
+  purchaseDate   DateTime             @map("purchase_date") @db.Date
+  lifespanMonths Int                  @map("lifespan_months") @default(24)
+  condition      String               @default("Baik") 
+  source         String               @default("manual") 
+  ecomId         String?              @map("ecom_id")
+  ecommerceTxn   EcommerceTransaction? @relation(fields: [ecomId], references: [id], onDelete: SetNull)
+  createdAt      DateTime             @default(now()) @map("created_at")
+  updatedAt      DateTime             @updatedAt @map("updated_at")
+
+  @@map("inventory")
+}
+
+model Subscription {
+  id           String   @id @default(uuid())
+  name         String
+  email        String?
+  amount       Decimal  @db.Decimal(15, 2)
+  billingCycle String   @map("billing_cycle") 
+  dueDate      DateTime @map("due_date") @db.Date
+  categoryId   String   @map("category_id")
+  category     Category @relation(fields: [categoryId], references: [id])
+  bankId       String   @map("bank_id")
+  bank         Bank     @relation(fields: [bankId], references: [id])
+  status       String   @default("active") 
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("subscriptions")
+}
+
+model Budget {
+  id         String   @id @default(uuid())
+  month      String   
+  categoryId String   @map("category_id")
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  limit      Decimal  @db.Decimal(15, 2)
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  @@unique([month, categoryId])
+  @@map("budgets")
+}
