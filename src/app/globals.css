@@ -10,6 +10,25 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* Deep Space Navy / Obsidian Overrides */
+  --color-slate-700: #1e293b;
+  --color-slate-800: #121a2e;
+  --color-slate-900: #0a0f1d;
+  --color-slate-950: #050811;
+
+  /* Cyber Cyan-Teal Overrides */
+  --color-emerald-50: #f0fdfa;
+  --color-emerald-100: #cffafe;
+  --color-emerald-200: #a5f3fc;
+  --color-emerald-300: #67e8f9;
+  --color-emerald-400: #22d3ee;
+  --color-emerald-500: #06b6d4;
+  --color-emerald-600: #0891b2;
+  --color-emerald-700: #0e7490;
+  --color-emerald-800: #155e75;
+  --color-emerald-900: #164e63;
+  --color-emerald-950: #083344;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -82,7 +101,7 @@ body {
   border-radius: 9999px;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(99, 102, 241, 0.4);
+  background: rgba(8, 145, 178, 0.4);
 }
 
 @keyframes slideDown {
