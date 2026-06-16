@@ -4,6 +4,7 @@ import React, { useState, useMemo } from "react";
 import { useAppState } from "@/hooks/useAppState";
 import { Modal } from "./ui/Modal";
 import { DatePicker } from "./ui/DatePicker";
+import { CategorySelect } from "./ui/CategorySelect";
 import {
   Plus,
   Trash2,
@@ -425,24 +426,11 @@ export function TransactionForm() {
                 <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">
                   Kategori
                 </label>
-                <select
-                  required
+                <CategorySelect
                   value={categorySelect}
-                  onChange={(e) => setCategorySelect(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 p-3 text-sm bg-white focus:ring-2 focus:ring-emerald-500 outline-none shadow-sm"
-                >
-                  <option value="">-- Pilih Kategori --</option>
-                  {categoryOptions.map((opt, i) => (
-                    <option
-                      key={i}
-                      value={opt.isParent ? opt.name : `${opt.parentName} - ${opt.name}`}
-                      disabled={opt.isParent}
-                      className={opt.isParent ? "font-bold bg-slate-100 text-slate-800" : ""}
-                    >
-                      {opt.isParent ? `● ${opt.name.toUpperCase()}` : `   └─ ${opt.name}`}
-                    </option>
-                  ))}
-                </select>
+                  onChange={setCategorySelect}
+                  options={categoryOptions}
+                />
               </div>
             )}
 
@@ -810,23 +798,11 @@ export function TransactionForm() {
                   <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">
                     Kategori
                   </label>
-                  <select
-                    required
+                  <CategorySelect
                     value={editCategorySelect}
-                    onChange={(e) => setEditCategorySelect(e.target.value)}
-                    className="w-full rounded-xl border border-slate-200 p-3 text-sm bg-white focus:ring-2 focus:ring-emerald-500 outline-none"
-                  >
-                    {editCategoryOptions.map((opt, i) => (
-                      <option
-                        key={i}
-                        value={opt.isParent ? opt.name : `${opt.parentName} - ${opt.name}`}
-                        disabled={opt.isParent}
-                        className={opt.isParent ? "font-bold bg-slate-100 text-slate-800" : ""}
-                      >
-                        {opt.isParent ? `● ${opt.name.toUpperCase()}` : `   └─ ${opt.name}`}
-                      </option>
-                    ))}
-                  </select>
+                    onChange={setEditCategorySelect}
+                    options={editCategoryOptions}
+                  />
                 </div>
               )}
 
