@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect, useRef } from "react";
 import { useAppState } from "@/hooks/useAppState";
 import { Modal } from "./ui/Modal";
 import {
@@ -14,6 +14,42 @@ import {
   Activity,
 } from "lucide-react";
 
+// Lightweight, fluid React Count-Up Component
+function AnimatedNumber({ value, formatter }: { value: number; formatter: (val: number) => string }) {
+  const [displayValue, setDisplayValue] = useState(0);
+  const startValueRef = useRef(0);
+  const startTimeRef = useRef<number | null>(null);
+  const duration = 1000; // 1s animation duration
+
+  useEffect(() => {
+    startValueRef.current = displayValue;
+    startTimeRef.current = null;
+    let animationFrameId: number;
+
+    const animate = (timestamp: number) => {
+      if (!startTimeRef.current) startTimeRef.current = timestamp;
+      const progress = Math.min((timestamp - startTimeRef.current) / duration, 1);
+      
+      // Easing: easeOutCubic
+      const easeProgress = 1 - Math.pow(1 - progress, 3);
+      
+      const currentVal = startValueRef.current + (value - startValueRef.current) * easeProgress;
+      setDisplayValue(currentVal);
+
+      if (progress < 1) {
+        animationFrameId = requestAnimationFrame(animate);
+      } else {
+        setDisplayValue(value);
+      }
+    };
+
+    animationFrameId = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [value]);
+
+  return <>{formatter(displayValue)}</>;
+}
+
 // E-wallet and E-money presets mapping
 const EWALLET_BRANDS = ["GoPay", "OVO", "DANA", "ShopeePay", "LinkAja"];
 const EMONEY_BRANDS = ["Flazz BCA", "E-Money Mandiri", "Brizzi BRI", "TapCash BNI", "KMT KRL"];
@@ -22,6 +58,11 @@ export function BanksView() {
   const { banks, addBank, deleteBank } = useAppState();
 
   const [activeFilter, setActiveFilter] = useState("all");
+  const [animateCards, setAnimateCards] = useState(false);
+
+  useEffect(() => {
+    setAnimateCards(true);
+  }, []);
 
   // Form states
   const [bankType, setBankType] = useState("bank");
@@ -163,17 +204,17 @@ export function BanksView() {
   const getCardStyle = (b: any) => {
     const type = b.account_type;
     if (type === "ewallet") {
-      if (b.name === "GoPay") return "from-emerald-500 to-green-600 text-white shadow-emerald-200/50";
-      if (b.name === "OVO") return "from-teal-600 to-violet-700 text-white shadow-teal-200/50";
-      if (b.name === "DANA") return "from-blue-500 to-sky-600 text-white shadow-blue-200/50";
-      if (b.name === "ShopeePay") return "from-orange-500 to-red-600 text-white shadow-orange-200/50";
-      return "from-teal-500 to-emerald-600 text-white shadow-teal-200/50";
+      if (b.name === "GoPay") return "from-emerald-500 to-teal-600 text-white shadow-emerald-500/10";
+      if (b.name === "OVO") return "from-indigo-950 via-slate-900 to-slate-950 text-white shadow-slate-950/20 border border-slate-800/80";
+      if (b.name === "DANA") return "from-cyan-500 to-blue-600 text-white shadow-cyan-500/10";
+      if (b.name === "ShopeePay") return "from-orange-500 to-rose-600 text-white shadow-orange-500/10";
+      return "from-teal-500 to-cyan-600 text-white shadow-teal-500/10";
     }
-    if (type === "emoney") return "from-emerald-500 to-blue-600 text-white shadow-emerald-200/50";
-    if (type === "credit_card") return "from-slate-800 to-slate-950 text-white shadow-slate-300";
-    if (type === "paylater") return "from-rose-500 to-red-600 text-white shadow-rose-200/50";
-    if (type === "cash") return "from-amber-400 to-orange-500 text-white shadow-amber-200/50";
-    return "from-sky-600 to-emerald-700 text-white shadow-blue-200/50"; // default: bank
+    if (type === "emoney") return "from-slate-700 via-slate-800 to-slate-900 text-white shadow-slate-700/10 border border-slate-600/30";
+    if (type === "credit_card") return "from-slate-900 via-slate-900 to-slate-950 text-white shadow-slate-950/20 border border-slate-800/60";
+    if (type === "paylater") return "from-rose-500 to-red-600 text-white shadow-rose-500/10";
+    if (type === "cash") return "from-amber-400 to-amber-500 text-white shadow-amber-400/10";
+    return "from-cyan-600 via-blue-600 to-indigo-700 text-white shadow-cyan-500/15"; // default: bank
   };
 
   return (
@@ -343,28 +384,38 @@ export function BanksView() {
       <div className="lg:col-span-2 space-y-6">
         {/* Total Assets & Total Debts */}
         <div className="grid grid-cols-2 gap-4">
-          <div className="bg-emerald-50 rounded-2xl p-4 border border-emerald-100 flex items-center gap-3 shadow-sm">
-            <div className="p-2.5 bg-emerald-500 rounded-xl text-white">
+          <div
+            className={`bg-white/70 backdrop-blur-md rounded-2xl p-5 border border-slate-100/80 border-l-4 border-l-emerald-500 shadow-sm flex items-center gap-4 hover:border-slate-200/80 hover:shadow-md transition-all duration-700 ease-out transform ${
+              animateCards ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+            }`}
+          >
+            <div className="p-3 bg-emerald-500/10 text-emerald-600 rounded-xl border border-emerald-500/20">
               <DollarSign className="w-5 h-5" />
             </div>
             <div>
               <p className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">
                 Total Aset Likuid
               </p>
-              <p className="text-lg font-black text-emerald-700 mt-0.5">
-                {formatRp(stats.assets)}
+              <p className="text-lg font-black text-slate-800 mt-0.5">
+                <AnimatedNumber value={stats.assets} formatter={formatRp} />
               </p>
             </div>
           </div>
-          <div className="bg-rose-50 rounded-2xl p-4 border border-rose-100 flex items-center gap-3 shadow-sm">
-            <div className="p-2.5 bg-rose-500 rounded-xl text-white">
+          <div
+            className={`bg-white/70 backdrop-blur-md rounded-2xl p-5 border border-slate-100/80 border-l-4 border-l-rose-500 shadow-sm flex items-center gap-4 hover:border-slate-200/80 hover:shadow-md transition-all duration-700 ease-out transform ${
+              animateCards ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+            }`}
+          >
+            <div className="p-3 bg-rose-500/10 text-rose-600 rounded-xl border border-rose-500/20">
               <CreditCard className="w-5 h-5" />
             </div>
             <div>
               <p className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">
                 Total Hutang Kredit
               </p>
-              <p className="text-lg font-black text-rose-700 mt-0.5">{formatRp(stats.debt)}</p>
+              <p className="text-lg font-black text-slate-800 mt-0.5">
+                <AnimatedNumber value={stats.debt} formatter={formatRp} />
+              </p>
             </div>
           </div>
         </div>
@@ -376,16 +427,19 @@ export function BanksView() {
               Belum ada akun rekening dengan tipe filter ini.
             </div>
           ) : (
-            filteredBanks.map((b) => {
+            filteredBanks.map((b, index) => {
               const currentBalance = Number(b.currentBalance) || 0;
               const isNeg = currentBalance < 0;
 
               return (
                 <div
                   key={b.id}
-                  className={`rounded-2xl p-5 shadow-md bg-gradient-to-br flex flex-col justify-between min-h-[140px] relative overflow-hidden group border border-black/5 ${getCardStyle(
+                  style={{ transitionDelay: `${index * 40}ms` }}
+                  className={`rounded-2xl p-5 shadow-md bg-gradient-to-br flex flex-col justify-between min-h-[140px] relative overflow-hidden group border border-black/5 transition-all duration-700 ease-out transform hover:-translate-y-0.5 hover:shadow-lg ${getCardStyle(
                     b
-                  )}`}
+                  )} ${
+                    animateCards ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+                  }`}
                 >
                   {/* Decorative card circle overlay */}
                   <div className="absolute -right-6 -top-6 w-24 h-24 bg-white/10 rounded-full blur-2xl group-hover:bg-white/15 transition-all duration-300 pointer-events-none" />
@@ -432,7 +486,7 @@ export function BanksView() {
                     </p>
                     <p className="text-xl font-black tracking-tight mt-0.5">
                       {isNeg ? "-" : ""}
-                      {formatRp(Math.abs(currentBalance))}
+                      <AnimatedNumber value={Math.abs(currentBalance)} formatter={formatRp} />
                     </p>
                   </div>
                 </div>
