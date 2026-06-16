@@ -3,6 +3,7 @@
 import React, { useState, useMemo } from "react";
 import { useAppState } from "@/hooks/useAppState";
 import { Modal } from "./ui/Modal";
+import { DatePicker } from "./ui/DatePicker";
 import {
   Plus,
   Trash2,
@@ -393,12 +394,9 @@ export function TransactionForm() {
                 <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">
                   Tanggal
                 </label>
-                <input
-                  type="date"
-                  required
+                <DatePicker
                   value={date}
-                  onChange={(e) => setDate(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 p-3 text-xs focus:ring-2 focus:ring-emerald-500 outline-none shadow-sm transition-all"
+                  onChange={setDate}
                 />
               </div>
 
@@ -554,12 +552,9 @@ export function TransactionForm() {
                   <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">
                     Tanggal
                   </label>
-                  <input
-                    type="date"
-                    required
+                  <DatePicker
                     value={quickDate}
-                    onChange={(e) => setQuickDate(e.target.value)}
-                    className="w-full rounded-xl border border-slate-200 p-2 text-xs focus:ring-2 focus:ring-emerald-500 outline-none shadow-sm"
+                    onChange={setQuickDate}
                   />
                 </div>
               </div>
@@ -784,12 +779,9 @@ export function TransactionForm() {
                 <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">
                   Tanggal
                 </label>
-                <input
-                  type="date"
-                  required
+                <DatePicker
                   value={editDate}
-                  onChange={(e) => setEditDate(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 p-3 text-xs focus:ring-2 focus:ring-emerald-500 outline-none"
+                  onChange={setEditDate}
                 />
               </div>
 
